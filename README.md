@@ -31,6 +31,8 @@ Open `/login` and use one of the seeded accounts below.
 
 Additional institution administrator accounts are seeded for every institution. The password above applies to all seeded accounts unless `SEED_ACCOUNT_PASSWORD` is set before running the seed.
 
+The sign-in page includes a **Demo access** strip. Selecting Bureau Head, Scrutiny, or Institution fills the seeded email and password, then focuses the **Sign in** button so the walkthrough can continue with one keypress.
+
 Passwords are stored as salted scrypt hashes. The signed session cookie carries only the user identifier; the account and role are reloaded from PostgreSQL on every request.
 
 ## Route map
