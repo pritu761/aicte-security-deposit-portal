@@ -155,6 +155,7 @@ Next.js server components ── Drizzle ORM ── PostgreSQL (Docker) or Neon
   │                                              │
   │                                              └── append-only audit trigger
   ├── AES-256-GCM encrypted document vault (.data/uploads)
+  ├── tracked demo evidence (demo-documents/, seeded fallback)
   └── authenticated /api/documents/[id] streaming
 ```
 
@@ -169,7 +170,7 @@ Next.js server components ── Drizzle ORM ── PostgreSQL (Docker) or Neon
 | Database | PostgreSQL 16, Drizzle ORM 0.45, Drizzle Kit 0.31 |
 | Drivers | Neon WebSocket Pool for Neon URLs; `pg` Pool locally |
 | Charts | Recharts 3.10 |
-| Documents | PDF-lib generated evidence; AES-256-GCM local vault |
+| Documents | PDF-lib generated evidence; AES-256-GCM local vault; tracked seeded fallback |
 | Authentication | Email/password, scrypt hashes, signed HttpOnly session cookie |
 | Tests | Vitest 5 |
 | Icons | Lucide React |
@@ -265,6 +266,16 @@ npm run db:setup
 
 `db:setup` pushes the Drizzle schema and runs the deterministic seed. Re-running it resets registered records and regenerates the encrypted document vault.
 
+The encrypted vault (`.data/uploads`) is intentionally excluded from Git. Every seeded record therefore also has a committed PDF in `demo-documents/`, listed by file name in `demo-documents/manifest.json`. If the local vault file is missing, the authenticated document route serves the matching tracked PDF instead. The fallback is allow-listed and integrity-checked, so uploaded documents never resolve from this folder.
+
+After changing the seed data or re-seeding a database, refresh the tracked PDFs from the newly generated vault:
+
+```bash
+npm run db:export-demo
+```
+
+Commit the regenerated PDFs and manifest.
+
 ### 4. Run
 
 ```bash
@@ -295,9 +306,12 @@ Then apply and seed from a trusted machine:
 ```bash
 npm run db:push
 npm run db:seed
+npm run db:export-demo
 ```
 
 The app auto-selects the Neon WebSocket driver for Neon URLs; `pg` is used locally and in CI. Both drivers support Drizzle transactions. `uselibpqcompat=true` keeps current libpq-compatible SSL behaviour for `pg`.
+
+Seeded previews do not depend on the deployment filesystem. The committed `demo-documents/` folder is included in the server trace for `/api/documents/[id]`, so a fresh clone or deploy still renders evidence after the database is seeded. New institution uploads still require durable object storage because `.data/uploads` is local and ephemeral.
 
 ## Scripts
 
@@ -314,6 +328,7 @@ The app auto-selects the Neon WebSocket driver for Neon URLs; `pg` is used local
 | `npm run db:setup` | Push schema with `--force`, then seed |
 | `npm run db:reset` | Reset registered records with the same push-and-seed flow |
 | `npm run db:seed` | Truncate and re-seed the register only |
+| `npm run db:export-demo` | Refresh the tracked demo PDFs and manifest from the local vault |
 | `npm run db:studio` | Open Drizzle Studio |
 
 ## Tests
@@ -324,11 +339,12 @@ npm run typecheck
 npm run build
 ```
 
-Current coverage: **34 tests across 3 suites**.
+Current coverage: **38 tests across 4 suites**.
 
 - `src/lib/utils.test.ts` — timezone-safe day maths, Indian currency formatting, maturity labels, effective status, CSV escaping, initials
 - `src/lib/validation.test.ts` — FDR submission, IFSC, issue/maturity dates, renewal parent UUID, bank verification, discrepancy remarks, release reason, head decision defaults, repository/audit filters, login input
 - `src/lib/fdr-status.test.ts` — expiry boundaries, renewal eligibility, 180-day window, financial-year boundaries, dispatch reference format
+- `src/lib/demo-documents.test.ts` — tracked seeded PDFs, manifest integrity, database fingerprint, unknown and traversal names
 
 ### Manual acceptance scenarios
 
@@ -377,6 +393,7 @@ The command palette opens with **Ctrl/Cmd + K** and searches every destination a
 - AES-256-GCM envelope (`AICTE1` magic, 12-byte IV, authentication tag) written with mode `0600`.
 - Random UUID storage keys; no user-controlled paths.
 - Documents served only through an authenticated portal route with `Content-Disposition: inline`.
+- Seeded demo fallback is allow-listed by exact file name, verified against a committed SHA-256 manifest, and never exposed as a static asset.
 - `X-Frame-Options: SAMEORIGIN` and CSP `frame-ancestors 'self'` allow the portal's own split-screen preview while blocking external framing.
 
 ### Input, export, and audit

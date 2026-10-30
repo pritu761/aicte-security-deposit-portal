@@ -2,6 +2,7 @@ import { createCipheriv, createDecipheriv, createHash, randomBytes, randomUUID }
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { readDemoDocument } from "@/lib/demo-documents";
 import { MAX_UPLOAD_BYTES } from "@/lib/validation";
 
 /**
@@ -10,6 +11,11 @@ import { MAX_UPLOAD_BYTES } from "@/lib/validation";
  * Files are validated, SHA-256 hashed and AES-256-GCM encrypted at rest. The
  * returned URL is the stable portal document URL. Replacing this module with
  * S3/Vercel Blob + KMS is the only change needed for managed object storage.
+ *
+ * Seeded evidence also has a tracked fallback under `demo-documents/` because
+ * the encrypted vault is intentionally excluded from Git. The fallback is
+ * whitelisted by the committed manifest and still served through the
+ * authenticated document route.
  */
 
 const UPLOAD_DIR = path.join(process.cwd(), ".data", "uploads");
@@ -114,10 +120,21 @@ export async function storeUploadedFile(file: File): Promise<StoredObject> {
   });
 }
 
-export async function readStoredObject(storageKey: string): Promise<Buffer> {
+export async function readStoredObject(
+  storageKey: string,
+  demo?: { fileName: string; sha256: string },
+): Promise<Buffer> {
   const safeKey = sanitizeStorageKey(storageKey);
-  const encrypted = await readFile(path.join(UPLOAD_DIR, `${safeKey}.bin`));
-  return decrypt(encrypted);
+
+  try {
+    const encrypted = await readFile(path.join(UPLOAD_DIR, `${safeKey}.bin`));
+    return decrypt(encrypted);
+  } catch (error) {
+    if (!demo || (error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    const fallback = await readDemoDocument(demo.fileName, demo.sha256);
+    if (!fallback) throw error;
+    return fallback;
+  }
 }
 
 export async function storeSeedDocument(

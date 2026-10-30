@@ -1,0 +1,384 @@
+{
+  "documents": {
+    "FDR-2021-007_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2903,
+      "sha256": "d36f3e940449a90a6ced7e585fa15a3cdec680ad7d803517e337a0289e2e2d9a"
+    },
+    "FDR-2021-007_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2970,
+      "sha256": "462f28b686609df9abbbfb57710a457a51b995a250bc0201c1b42ba275927740"
+    },
+    "FDR-2021-041_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2905,
+      "sha256": "d3b9227f5cbae436485a7173df9fba58e4aec0be97ec9758b4cb9098df9ce868"
+    },
+    "FDR-2021-041_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2956,
+      "sha256": "af1690a1c85c88fce3fb3057b183b8b2fba6fcf5aa4bffcfda5127441a2e35c1"
+    },
+    "FDR-2022-099_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2917,
+      "sha256": "f48803cce710764c1ca332d8ee5e01530eccdc803ac24d9618193cb8269b2fe8"
+    },
+    "FDR-2022-099_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2970,
+      "sha256": "88641a5dd3339f2f99c6b6a84bd3fc71be15fac01110f86522ad897bc4cb76f0"
+    },
+    "FDR-2022-155_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2891,
+      "sha256": "a264855b38d2be8545108ad6d9ab381cf1e1e12243bf92a93e74f04388905da3"
+    },
+    "FDR-2022-155_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2963,
+      "sha256": "15d24d63b24617c970e6f42e3167aad89a087112b81a222b7e9a8d0e5df45627"
+    },
+    "FDR-2022-333_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2901,
+      "sha256": "99d36091f2d0197966d8049c87ca3a070bb4dbc06feabf12cefb4a914e785cd3"
+    },
+    "FDR-2022-333_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "2f03341ec9785ad436b7c347c8d045d15a2f7e2e123d22217f4d99b58e35ad03"
+    },
+    "FDR-2023-042_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2889,
+      "sha256": "c9fac75858a70e8c0bdb3274e4d20acb3cb41256040130ba4094a2ccc4dbed84"
+    },
+    "FDR-2023-042_Discharge_Voucher.pdf": {
+      "docType": "DISCHARGE_VOUCHER",
+      "sizeBytes": 2632,
+      "sha256": "05130ffb98b062759e62e89dc0a8e7a2a24575ddd6ee6129dfa956edd0890fd6"
+    },
+    "FDR-2023-042_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2953,
+      "sha256": "b079856b36280a10c1633770cf64089cb1a136fa76dde8b388368e62a5ed7cf4"
+    },
+    "FDR-2023-044_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2884,
+      "sha256": "a12e08d88dd2e8b40761eeba08f72f0ac02e951bfcf2aee6a5d5640beed83d21"
+    },
+    "FDR-2023-044_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2960,
+      "sha256": "adc4db237c9119c2108782c49b38e9ce1c0475220ee4ecff9617cfb43ee45951"
+    },
+    "FDR-2023-210_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2904,
+      "sha256": "d0f5adb18004aed0ee79917077667f05d555b60e93a1348dcc6e82328af95b99"
+    },
+    "FDR-2023-210_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2965,
+      "sha256": "cf9a2868c0a6d8d185144a516ca04ebe6407fbfb7ef8efde16d933834067fcbf"
+    },
+    "FDR-2023-298_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2894,
+      "sha256": "28fc38e5cde7d9e499271c1f821a45b4dff0d53746150b643f6d7d6272b8a2d1"
+    },
+    "FDR-2023-298_Discharge_Voucher.pdf": {
+      "docType": "DISCHARGE_VOUCHER",
+      "sizeBytes": 2634,
+      "sha256": "bbad97a2c2c74b12d3a4d475f7f257ff60e082ea1698013bbe40201cc47ab06a"
+    },
+    "FDR-2023-298_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2950,
+      "sha256": "79dca466e897e2d85c3bb59386089325d369e55a4304a1ec446e126d912d2a93"
+    },
+    "FDR-2023-333_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2861,
+      "sha256": "0e62618c35c841148819c5d8787fcf0f7ff357ba2acc10f38bb8937256b02819"
+    },
+    "FDR-2023-333_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2927,
+      "sha256": "7bd2095e5e051236852e429c23951aa55f5641e2c1caf7fe27f58619806403ed"
+    },
+    "FDR-2023-555_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2876,
+      "sha256": "56f0451ac67cb3b132bd211f81ad65f03663956cd3e0099abb5537cd62939da0"
+    },
+    "FDR-2023-555_Discharge_Voucher.pdf": {
+      "docType": "DISCHARGE_VOUCHER",
+      "sizeBytes": 2606,
+      "sha256": "8d3470f196f82881ce4a15ac34003b4620a592618698da495b555f3c9f27425a"
+    },
+    "FDR-2023-555_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2927,
+      "sha256": "f0629a54bcd42cb53b44ece6d7dd662c44438b7e0d6af76cda55cdd8485ae670"
+    },
+    "FDR-2023-777_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2885,
+      "sha256": "1fde928b49c5d86c41b0647a5bc9aa77a24c2d68de9938af13178e8ffa025397"
+    },
+    "FDR-2023-777_Discharge_Voucher.pdf": {
+      "docType": "DISCHARGE_VOUCHER",
+      "sizeBytes": 2624,
+      "sha256": "4c892d8d785e7f35c5e0a187390429bdc45c8214888f8bb97b85e5b13bed295d"
+    },
+    "FDR-2023-777_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2935,
+      "sha256": "3d5d011bb7979924dc657be3652e1e58ab1ec9153835f4b62b480c7b3ed31eec"
+    },
+    "FDR-2023-888_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2968,
+      "sha256": "9cd71873b19eeb2f4f94fb4d41d9249649f2ddb6d821f66633a09ae84abb4d21"
+    },
+    "FDR-2024-1001_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2872,
+      "sha256": "ea755a671467e65305233419d9a199cbc9b8718fe41024515258fcd2417f51ee"
+    },
+    "FDR-2024-1001_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2940,
+      "sha256": "fdb3da08037f4d9174459ba9286039a16aed00fa1b7a24944dc7494ad95bf09e"
+    },
+    "FDR-2024-1101_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2888,
+      "sha256": "c6ba348a4ce8ad6ef341b5b5d31ad65b79a1cd2459f25bdc1ba0e9a6b0d194d7"
+    },
+    "FDR-2024-1101_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2949,
+      "sha256": "bc473c6a40bb31911c47a9ca2ae02df63db3a477192dbf9db3a1951ec058497c"
+    },
+    "FDR-2024-118_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2894,
+      "sha256": "1bd0c347f3ab7b4540f7a27e10544926156b2dce80ad673aa56e77584ffb3443"
+    },
+    "FDR-2024-118_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2964,
+      "sha256": "cfec2563debef7eab24beb32db41868972bb70037350de84906c952b288f4125"
+    },
+    "FDR-2024-119_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2899,
+      "sha256": "9677584dd016f8c2c0deba224a26b54b4839a538077e70461fdfbeb2e82ebfc2"
+    },
+    "FDR-2024-119_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "a682c06d525640bf680bd256912665534340b6609f0c94691fa2d68360763adf"
+    },
+    "FDR-2024-1201_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2879,
+      "sha256": "a6b70b6577b47fe28be6d46cca689d1863e1ac9dfea5a6ef570b415e5b4713ca"
+    },
+    "FDR-2024-1201_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "2ba4a21df53f686355a5b80bcd53a0bae763ffb7a666a325cd730afa544ebe8d"
+    },
+    "FDR-2024-1301_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2880,
+      "sha256": "4b3e339d3e147d49d5fdf9579c73ef20457badfb3dfcfc408d1b3e9f8b501868"
+    },
+    "FDR-2024-1301_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2948,
+      "sha256": "20fbdaeb363d9ef200ed080c8377db09dee9ce4fd4dcc3862392d358aa135ee2"
+    },
+    "FDR-2024-311_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2959,
+      "sha256": "92bc740a4b348b81dfa6005257e4ba62091589b8667b8271b1f829804f5e47dc"
+    },
+    "FDR-2024-401_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2895,
+      "sha256": "ed4cce3db577531ac0ef5498b6e408beec60571c4c5a6f1b9ed3d94d3366e45f"
+    },
+    "FDR-2024-401_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "6d496eaa199a49a6e4b53c4a9260cda35d16d4ac45c80ae8fd4ee2db4e82c86e"
+    },
+    "FDR-2024-450_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2954,
+      "sha256": "c746b35849d5bff2aa6a1e14f370606fc06ad8b1ae69b05e6771163f9dd05fb2"
+    },
+    "FDR-2024-512_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2880,
+      "sha256": "c55c3a1527dcfbe4d778303e9af326136c8b6769d54806fa9afd678ef5f1365e"
+    },
+    "FDR-2024-512_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2950,
+      "sha256": "a58993c980ee565555c5bdec86de246e4d6b534e8ada9173cf13d711c70465ae"
+    },
+    "FDR-2024-602_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2888,
+      "sha256": "2d3613dd6f61b9b94613ab6ef7691d82f3b34f7115620f03fc1d62dbc73dfa6e"
+    },
+    "FDR-2024-602_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2951,
+      "sha256": "1bca7bb27b686dc9b9fbdd4f8035734362042242795b822f3d3098a2737404c9"
+    },
+    "FDR-2024-701_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2890,
+      "sha256": "ce2cfb3d79d83a7165d0dad1e6534c42ebc21106b2781442ce52aacf6bb28f3b"
+    },
+    "FDR-2024-701_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2947,
+      "sha256": "7db64124e9254c9eea6f01fa3bad9999b4ac5f27c232a5dcf3131ecdd50ae47d"
+    },
+    "FDR-2024-801_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2892,
+      "sha256": "ced29ac11427e40de1cc575e60422e2bc48816795ae343a47d22c299faf38ae2"
+    },
+    "FDR-2024-801_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2954,
+      "sha256": "34c09004620dbc592a67d4fcc05fb79daa0fda52b54f0e10417eb7e6fd964bc6"
+    },
+    "FDR-2024-901_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2883,
+      "sha256": "4696e2bce8320f76d0de160859c44030d94bf7115e75b0f1b36ffc8cb847d40a"
+    },
+    "FDR-2024-901_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2954,
+      "sha256": "3701ac81cf5845ffcb4722dfe0b6ce1bca1698dfe668360886e9d882301b54fc"
+    },
+    "FDR-2025-010_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2967,
+      "sha256": "c7c2b64ee302c1d8ef65899fe4dbb2da73e1750918ad39b666888a6aaea27423"
+    },
+    "FDR-2025-067_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2892,
+      "sha256": "a6164510f87396f2954d3c4278a8d4708d6501cb2a05f5f7c02ecb68e7f0a0e6"
+    },
+    "FDR-2025-067_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2944,
+      "sha256": "cdaae475ed5c8c08f3489748663e6b1733b0ac7e07e902e49ef78b563dea9cc3"
+    },
+    "FDR-2025-088_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2904,
+      "sha256": "b8184936352fee8e373aae1770a59ee653201b5626a0fcf8cb11277157c69e5a"
+    },
+    "FDR-2025-088_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2967,
+      "sha256": "a29d6e0217336ce096cb2b1f9e3cc087719b01bbfdad3c606084c7e18473f3d2"
+    },
+    "FDR-2025-094_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2898,
+      "sha256": "1e9be8cd5a935d51c4b39b12fd03f751caa9aeaa8da1c85862a24bc282e81624"
+    },
+    "FDR-2025-094_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2956,
+      "sha256": "81c763b052d287ac67a66fabbc368a6b98d53e29321755d5c122a4d7cfd22957"
+    },
+    "FDR-2025-102_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2943,
+      "sha256": "779b6323b43bb42fbdda52c36eea736bfe3d64fbdf43b538c29423f9bdf4f171"
+    },
+    "FDR-2025-111_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2906,
+      "sha256": "2bc64c10748d86845f288795182214d4c86373885870db93f2d882f663314f95"
+    },
+    "FDR-2025-111_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2964,
+      "sha256": "d6e8820019142cf237c921b94b116138e6aceb155143b845ef81f661db444d77"
+    },
+    "FDR-2025-145_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2968,
+      "sha256": "a93e763853a04603a4e74c5229d7766c4365a2966fa1691eaad3095c63876610"
+    },
+    "FDR-2025-160_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "520ff9354ee552409bf86f93b73a60079e52d27202a4078c2eece77346762b1e"
+    },
+    "FDR-2025-171_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2969,
+      "sha256": "0b3db28583a1df4e88c96b137e4e959bdfea7dffd7ec1f498780831b2647748b"
+    },
+    "FDR-2025-204_Bank_Confirmation.pdf": {
+      "docType": "BANK_CONFIRMATION_LETTER",
+      "sizeBytes": 2887,
+      "sha256": "b2cc350bf4a49e3517b7bd17817f8b859d8db8ffd44d4d2ebf50f6aaf13273da"
+    },
+    "FDR-2025-204_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2956,
+      "sha256": "aee471abe5a4496432c143691ab918538acbf9cbe96c5a849f90e3fa5c9b8f6c"
+    },
+    "FDR-2025-220_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2965,
+      "sha256": "824171767390becccddecacd4c2abd9bda55fb8a348c4ef62ff3106b2e1cebf3"
+    },
+    "FDR-2025-250_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2965,
+      "sha256": "37fb4b3b3eee3db004ed4a44c660aff3fffa77a513aa7601e42b561db5231e60"
+    },
+    "FDR-2025-301_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2952,
+      "sha256": "8c49e8799620024e422cf67432fcbae35efa2c4c7f4981dfc051f448abb29eb9"
+    },
+    "FDR-2025-330_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2948,
+      "sha256": "7c9ee255d4efb6339371655f6ea6d544f8042b9007026c56d114377c3d41f407"
+    },
+    "FDR-2025-360_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2955,
+      "sha256": "46d34f6a1a35f526a5632310eb50ab1ab1284b2511eec1095b023ed7608f6052"
+    },
+    "FDR-2025-390_FDR_Certificate.pdf": {
+      "docType": "ORIGINAL_FDR_SCAN",
+      "sizeBytes": 2943,
+      "sha256": "3c119609ae277ab1ac25fb52398feb0fa81a6c58c309d539200bf0d57357756f"
+    }
+  }
+}

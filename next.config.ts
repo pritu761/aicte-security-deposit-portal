@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     },
   },
   serverExternalPackages: ["pg", "ws"],
+  outputFileTracingIncludes: {
+    "/api/documents/[id]": ["./demo-documents/**/*"],
+  },
   poweredByHeader: false,
   async headers() {
     return [

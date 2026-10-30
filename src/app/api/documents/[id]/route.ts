@@ -43,7 +43,10 @@ export async function GET(
   }
 
   try {
-    const buffer = await readStoredObject(row.document.storageKey);
+    const buffer = await readStoredObject(row.document.storageKey, {
+      fileName: row.document.fileName,
+      sha256: row.document.sha256,
+    });
     const safeName = row.document.fileName.replace(/["\\\r\n]/g, "_");
     const encoded = encodeURIComponent(row.document.fileName);
 

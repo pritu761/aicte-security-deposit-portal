@@ -12,6 +12,7 @@
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx --env-file=.env.local src/db/seed.ts",
+    "db:export-demo": "node --env-file=.env.local scripts/export-demo-documents.mjs",
     "db:setup": "drizzle-kit push --force && tsx --env-file=.env.local src/db/seed.ts",
     "db:reset": "drizzle-kit push --force && tsx --env-file=.env.local src/db/seed.ts",
     "db:studio": "drizzle-kit studio",
