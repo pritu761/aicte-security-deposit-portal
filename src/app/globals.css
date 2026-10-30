@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 30% 97%;
+    --foreground: 214 42% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 214 42% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 214 42% 12%;
+    --primary: 210 68% 16%;
+    --primary-foreground: 40 30% 98%;
+    --secondary: 40 22% 93%;
+    --secondary-foreground: 214 38% 18%;
+    --muted: 40 18% 94%;
+    --muted-foreground: 214 14% 42%;
+    --accent: 192 34% 92%;
+    --accent-foreground: 210 58% 18%;
+    --destructive: 350 72% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 18% 86%;
+    --input: 214 18% 84%;
+    --ring: 199 68% 36%;
+    --radius: 0.6rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(1100px 500px at 85% -10%, rgba(217, 131, 42, 0.055), transparent 60%),
+      radial-gradient(900px 460px at 8% -8%, rgba(11, 43, 71, 0.06), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(217, 131, 42, 0.22);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(11, 43, 71, 0.25) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgba(11, 43, 71, 0.22);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+    font-variation-settings: "opsz" 36;
+  }
+
+  .eyebrow {
+    @apply text-[10.5px] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .paper-grid {
+    background-image:
+      linear-gradient(rgba(11, 43, 71, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 43, 71, 0.045) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .navy-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .metric-number {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .hash {
+    @apply break-all font-mono text-[10.5px] leading-relaxed text-muted-foreground;
+  }
+
+  .data-label {
+    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+
+  .link-underline {
+    @apply underline decoration-border decoration-1 underline-offset-4 transition-colors hover:decoration-primary;
+  }
+
+  .print-only {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #print-receipt,
+  #print-receipt * {
+    visibility: visible;
+  }
+
+  #print-receipt {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 32px !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .print-hide {
+    display: none !important;
+  }
+}
