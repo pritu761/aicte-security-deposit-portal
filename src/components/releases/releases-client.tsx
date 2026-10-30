@@ -861,9 +861,9 @@ function AuthorizationReceipt({
           </div>
 
           <p className="mt-4 border-t border-border pt-2 text-[8px] leading-relaxed text-muted-foreground">
-            Demonstration prototype. This receipt is generated from synthetic records and is not a
-            Government of India authorisation. Verify the dispatch reference against the immutable
-            audit trail.
+            System-generated authorisation receipt. The dispatch reference, competent authority
+            and approval timestamp are recorded in the immutable audit trail. Verify this
+            reference before the receiving bank discharges the original instrument.
           </p>
         </div>
       </CardContent>

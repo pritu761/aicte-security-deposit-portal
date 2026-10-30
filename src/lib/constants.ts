@@ -5,7 +5,7 @@ export const APP_SUBTITLE = "Security Deposit & FDR Management Portal";
 export const ORGANISATION = "All India Council for Technical Education";
 export const REGULATION_BUREAU = "Regulation Bureau, Ministry of Education, Government of India";
 
-export const DEMO_INSTITUTION_ID = "b2f5d4b8-3c4a-4f0e-9a6d-3d1f5e7a8c91";
+export const PRIMARY_INSTITUTION_ID = "b2f5d4b8-3c4a-4f0e-9a6d-3d1f5e7a8c91";
 
 export const ROLE_LABELS: Record<UserRole, string> = {
   INSTITUTION_ADMIN: "Institution Administrator",
@@ -209,7 +209,8 @@ export const AUDIT_ACTION_LABELS: Record<string, string> = {
   RELEASE_APPROVED: "Release approved",
   RELEASE_REJECTED: "Release rejected",
   STATUS_REFRESHED: "Status refreshed",
-  ROLE_SWITCHED: "Demo role switched",
+  SESSION_STARTED: "Signed in to the portal",
+  SESSION_ENDED: "Signed out of the portal",
   DOCUMENT_UPLOADED: "Document uploaded",
   REPORT_EXPORTED: "Report exported",
 };

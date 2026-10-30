@@ -6,8 +6,18 @@ const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[
 const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
-export const roleSwitchSchema = z.object({
-  role: z.enum(["INSTITUTION_ADMIN", "AICTE_SCRUTINY_OFFICER", "REGULATION_BUREAU_HEAD"]),
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, "Enter your email address.")
+    .max(200, "Email address is too long.")
+    .email("Enter a valid email address.")
+    .transform((value) => value.toLowerCase()),
+  password: z
+    .string()
+    .min(1, "Enter your password.")
+    .max(200, "Password is too long."),
 });
 
 export const fdrSubmissionSchema = z

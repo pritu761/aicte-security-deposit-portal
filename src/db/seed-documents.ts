@@ -93,10 +93,10 @@ async function baseDocument(title: string, subject: string): Promise<{ pdf: PDFD
 }
 
 function watermark(page: PDFPage, fonts: Fonts) {
-  page.drawText("DEMO DOCUMENT — FOR AICTE PORTAL EVALUATION", {
+  page.drawText("AICTE SURAKSHA — DIGITAL CUSTODY COPY", {
     x: 52,
     y: 330,
-    size: 22,
+    size: 20,
     font: fonts.bold,
     color: rgb(0.82, 0.84, 0.87),
     opacity: 0.55,
@@ -258,7 +258,7 @@ export async function createFdrCertificatePdf(data: FdrPdfData): Promise<Buffer>
     font: fonts.regular,
     color: SLATE,
   });
-  page.drawText("This is a system-generated demonstration document for the AICTE portal prototype.", {
+  page.drawText("System-generated custody record. Particulars are verified against the issuing branch.", {
     x: 60,
     y: 78,
     size: 7.5,

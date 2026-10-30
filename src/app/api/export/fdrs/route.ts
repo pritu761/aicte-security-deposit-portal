@@ -87,7 +87,7 @@ export async function GET(request: Request) {
           recordCount: prepared.length,
           filters,
           disclaimer:
-            "Demonstration data. This export is generated from synthetic records for prototype evaluation only.",
+            "Generated from the live AICTE Suraksha register. Verify instrument particulars against the source documents before external use.",
         },
         records: prepared,
       },

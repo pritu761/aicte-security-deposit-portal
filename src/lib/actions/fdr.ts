@@ -14,7 +14,7 @@ import {
 import { logAudit } from "@/lib/audit";
 import { statusFromMaturity } from "@/lib/fdr-status";
 import { getCurrentUser, assertCanScrutinize } from "@/lib/session";
-import { uploadFileToMockCloudStorage } from "@/lib/storage";
+import { storeUploadedFile } from "@/lib/storage";
 import { daysUntil, todayISO } from "@/lib/utils";
 import {
   ActionError,
@@ -157,9 +157,9 @@ export async function createFdrAction(formData: FormData): Promise<ActionState> 
       }
     }
 
-    const storedOriginal = await uploadFileToMockCloudStorage(originalFile);
+    const storedOriginal = await storeUploadedFile(originalFile);
     const storedBankLetter = bankLetterFile
-      ? await uploadFileToMockCloudStorage(bankLetterFile)
+      ? await storeUploadedFile(bankLetterFile)
       : null;
     const fdrId = randomUUID();
     const initialStatus = statusFromMaturity(data.maturityDate);
@@ -287,7 +287,7 @@ export async function verifyFdrAction(formData: FormData): Promise<ActionState> 
       const error = validateUpload(file);
       if (error) throw new ActionError(error, { bankConfirmation: [error] });
     }
-    const storedLetter = file ? await uploadFileToMockCloudStorage(file) : null;
+    const storedLetter = file ? await storeUploadedFile(file) : null;
 
     const now = new Date();
     const lockedStatuses: FdrStatus[] = ["RELEASE_REQUESTED", "RENEWAL_PENDING"];
@@ -526,7 +526,7 @@ export async function uploadDocumentAction(formData: FormData): Promise<ActionSt
     }
 
     const file = await requireDocumentFile(formData);
-    const stored = await uploadFileToMockCloudStorage(file);
+    const stored = await storeUploadedFile(file);
     const now = new Date();
 
     await db.transaction(async (tx) => {

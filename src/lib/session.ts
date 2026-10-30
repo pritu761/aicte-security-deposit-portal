@@ -3,7 +3,7 @@ import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cache } from "react";
 import { cookies } from "next/headers";
-import { asc, eq, or } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import { institutions, users, type Institution, type UserRole } from "@/db/schema";
@@ -98,58 +98,19 @@ async function fetchUser(id: string): Promise<SessionUser | null> {
 }
 
 /**
- * Demo identity resolver.
+ * Resolve the signed portal session to a live database user.
  *
- * The evaluation build intentionally exposes a role switcher instead of a login
- * form (as required for testing). The signed, HttpOnly cookie and server-side
- * lookups still enforce RBAC on every action. Swap this resolver for AICTE SSO
- * (OIDC/SAML) without changing the rest of the application.
+ * Only the user UUID is carried in the cookie. Role, institution scope and
+ * active status are reloaded on every request, so a deactivated account or an
+ * edited role takes effect immediately. An absent or invalid cookie resolves to
+ * an anonymous visitor and the portal layout redirects to /login.
  */
 export const getCurrentUser = cache(async (): Promise<SessionUser | null> => {
   const cookieStore = await cookies();
   const id = decodeSession(cookieStore.get(SESSION_COOKIE)?.value);
-  if (id) {
-    const user = await fetchUser(id);
-    if (user) return user;
-  }
-
-  // First visit: open as the Bureau Head so the portal is immediately usable.
-  const [fallback] = await db
-    .select({ id: users.id })
-    .from(users)
-    .where(
-      or(
-        eq(users.email, "head@aicte.gov.in"),
-        eq(users.role, "REGULATION_BUREAU_HEAD"),
-      ),
-    )
-    .orderBy(asc(users.email))
-    .limit(1);
-  if (!fallback) return null;
-  return fetchUser(fallback.id);
+  if (!id) return null;
+  return fetchUser(id);
 });
-
-export async function getDemoUserForRole(role: UserRole): Promise<SessionUser | null> {
-  const preferredEmail: Record<UserRole, string> = {
-    INSTITUTION_ADMIN: "admin@niet.ac.in",
-    AICTE_SCRUTINY_OFFICER: "scrutiny@aicte.gov.in",
-    REGULATION_BUREAU_HEAD: "head@aicte.gov.in",
-  };
-  const [preferred] = await db
-    .select({ id: users.id })
-    .from(users)
-    .where(eq(users.email, preferredEmail[role]))
-    .limit(1);
-  const [fallback] = preferred
-    ? [preferred]
-    : await db
-        .select({ id: users.id })
-        .from(users)
-        .where(eq(users.role, role))
-        .orderBy(asc(users.email))
-        .limit(1);
-  return fallback ? fetchUser(fallback.id) : null;
-}
 
 export function canScrutinize(user: SessionUser): boolean {
   return user.role === "AICTE_SCRUTINY_OFFICER";

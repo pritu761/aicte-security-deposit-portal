@@ -2,14 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Bell,
-  ChevronRight,
-  Menu,
-  Search,
-} from "lucide-react";
+import { Bell, ChevronRight, Menu } from "lucide-react";
 
-import { RoleSwitcher } from "@/components/navigation/role-switcher";
+import { CommandPalette } from "@/components/navigation/command-palette";
+import { UserMenu } from "@/components/navigation/user-menu";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,7 +17,7 @@ import {
 import { ROLE_LABELS, ROLE_SHORT_LABELS } from "@/lib/constants";
 import type { UserRole } from "@/db/schema";
 import type { SessionUser } from "@/lib/session";
-import { formatDateTime, initials } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils";
 
 export type NotificationItem = {
   id: string;
@@ -42,6 +38,9 @@ const crumbs: Record<string, string> = {
   releases: "Release authorisations",
   audit: "Immutable audit trail",
   scrutiny: "Scrutiny & discrepancy desk",
+  about: "About the portal",
+  help: "Help centre",
+  security: "Security & assurance",
 };
 
 export function Header({
@@ -60,17 +59,21 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-30">
-      <div className="flex h-7 items-center justify-between gap-4 bg-navy-950 px-4 text-[10px] tracking-wide text-white/65 sm:px-6 lg:px-8">
+      <div className="flex h-7 items-center justify-between gap-4 bg-navy-950 px-4 text-[10px] tracking-wide text-white/60 sm:px-6 lg:px-8">
         <p className="truncate">
-          All India Council for Technical Education · Regulation Bureau
+          All India Council for Technical Education
+          <span className="hidden sm:inline"> · Regulation Bureau</span>
         </p>
         <p className="hidden shrink-0 items-center gap-1.5 sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-saffron-300" aria-hidden />
-          Demonstration environment · synthetic records
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
+          Secure session
+          <span className="hidden text-white/30 md:inline">·</span>
+          <span className="hidden text-white/45 md:inline">Role-scoped access</span>
         </p>
       </div>
+
       <div className="border-b border-border/80 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85">
-        <div className="flex h-[60px] items-center gap-3 px-4 sm:px-6 lg:px-8">
+        <div className="flex h-[62px] items-center gap-2 px-4 sm:gap-3 sm:px-6 lg:px-8">
           <Button
             type="button"
             variant="ghost"
@@ -85,7 +88,7 @@ export function Header({
           <nav aria-label="Breadcrumb" className="min-w-0 flex-1">
             <ol className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <li className="hidden sm:block">
-                <Link href="/dashboard" className="hover:text-foreground">
+                <Link href="/dashboard" className="transition-colors hover:text-foreground">
                   AICTE
                 </Link>
               </li>
@@ -106,27 +109,7 @@ export function Header({
             </ol>
           </nav>
 
-          <form
-            action="/repository"
-            method="get"
-            role="search"
-            className="relative hidden w-[240px] xl:block"
-          >
-            <label htmlFor="global-search" className="sr-only">
-              Search FDRs, institutions, banks or AICTE IDs
-            </label>
-            <Search
-              className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
-              aria-hidden
-            />
-            <input
-              id="global-search"
-              name="q"
-              type="search"
-              placeholder="Search portal…"
-              className="h-9 w-full rounded-md border border-border bg-muted/40 pl-8 pr-3 text-xs outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary/40 focus:bg-card focus:ring-2 focus:ring-ring/20"
-            />
-          </form>
+          <CommandPalette role={user.role} />
 
           <div className="h-6 w-px bg-border/70" aria-hidden />
 
@@ -156,7 +139,7 @@ export function Header({
                   </p>
                 </div>
                 <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                  {notifications.length} new
+                  {notifications.length} recent
                 </span>
               </div>
               <div className="max-h-[320px] overflow-y-auto p-1.5">
@@ -172,7 +155,10 @@ export function Header({
                               : "/dashboard"
                         }
                       >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-400" aria-hidden />
+                        <span
+                          className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-400"
+                          aria-hidden
+                        />
                         <span className="min-w-0 flex-1">
                           <span className="block text-xs font-medium leading-snug text-foreground">
                             {item.summary}
@@ -206,29 +192,16 @@ export function Header({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <RoleSwitcher role={user.role} />
-
-          <div className="hidden items-center gap-2.5 border-l border-border/70 pl-3 md:flex">
-            <span
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-900 text-[11px] font-semibold text-white"
-              aria-hidden
-            >
-              {initials(user.name)}
-            </span>
-            <span className="hidden max-w-[150px] xl:block">
-              <span className="block truncate text-xs font-semibold leading-tight">
-                {user.name}
-              </span>
-              <span className="mt-0.5 block truncate text-[10px] text-muted-foreground">
-                {ROLE_LABELS[user.role]}
-              </span>
-            </span>
-          </div>
+          <UserMenu user={user} />
           <span className="sr-only">
             Signed in as {user.name}, {ROLE_LABELS[user.role]}. {ROLE_SHORT_LABELS[user.role]}{" "}
             workspace.
           </span>
         </div>
+        <div
+          className="h-px bg-gradient-to-r from-transparent via-saffron-300/50 to-transparent"
+          aria-hidden
+        />
       </div>
     </header>
   );

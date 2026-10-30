@@ -1,30 +1,44 @@
 # AICTE Suraksha
 
-**Security Deposit & FDR Management Portal** — a full-stack prototype for the All India Council for Technical Education (AICTE) Regulation Bureau.
+**Security Deposit & FDR Management Portal** — a full-stack portal for the All India Council for Technical Education (AICTE) Regulation Bureau.
 
-AICTE Suraksha replaces spreadsheet-based tracking of institutional security deposits with a single register for FDR instruments, bank verification, renewal succession, release authorisation, and an immutable audit trail.
-
-> **Demonstration prototype.** Every institution, officer, bank receipt, amount, and document in this repository is synthetic. This is not a Government of India system, not an official AICTE authorisation, and must not be used with real financial or personal data.
+AICTE Suraksha replaces spreadsheet-based tracking of institutional security deposits with a single register for FDR instruments, bank verification, renewal succession, release authorisation, and an immutable audit trail. Access requires an authenticated account, and every action is scoped by role and institution.
 
 ![Executive dashboard](docs/screenshots/dashboard-head.png)
 
 ## At a glance
 
-- **Next.js 15 App Router**, React 19, TypeScript strict mode
+- **Next.js 16.4 App Router**, React 19.3, TypeScript 7 strict mode
 - **PostgreSQL** via Drizzle ORM — local Docker or pooled **Neon**
+- Mandatory email/password sign-in with scrypt password hashes
 - Three-role RBAC enforced in server components, queries, and server actions
-- Seven required routes plus document, export, health, and scheduled-status APIs
-- Realistic seeded register: **12 institutions, 15 users, 43 FDRs, 76 documents, 8 release cases, 138 audit events**
+- Ten portal routes plus document, export, health, and scheduled-status APIs
+- Representative seeded register: **12 institutions, 15 users, 43 FDRs, 76 documents, 8 release cases, 138 audit events**
 - AES-256-GCM encrypted document vault with authenticated streaming
 - Append-only audit log enforced by a PostgreSQL trigger
 - Recharts analytics, CSV/JSON exports, printable release authorisation receipts
 - **34 Vitest unit tests**, clean `tsc --noEmit`, production build verified
 
+## Sign in
+
+Open `/login` and use one of the seeded accounts below.
+
+| Role | Account | Password |
+| --- | --- | --- |
+| Regulation Bureau Head | `head@aicte.gov.in` | `Aicte@2026` |
+| AICTE Scrutiny Officer | `scrutiny@aicte.gov.in` | `Aicte@2026` |
+| Institution Administrator (NIET) | `admin@niet.ac.in` | `Aicte@2026` |
+
+Additional institution administrator accounts are seeded for every institution. The password above applies to all seeded accounts unless `SEED_ACCOUNT_PASSWORD` is set before running the seed.
+
+Passwords are stored as salted scrypt hashes. The signed session cookie carries only the user identifier; the account and role are reloaded from PostgreSQL on every request.
+
 ## Route map
 
 | Route | Purpose | Access |
 | --- | --- | --- |
-| `/` | Redirects to `/dashboard` | Public |
+| `/login` | Email/password sign-in with inline validation and redirect guards | Public |
+| `/` | Redirects to `/dashboard` | Authenticated |
 | `/dashboard` | Portfolio value, active/expiring/overdue counts, bank and maturity charts, action centre, recent activity | All roles, scoped by institution for institution admins |
 | `/repository` | Dense searchable FDR register with status, verification, state and region filters; CSV/JSON export | All roles, institution-scoped for institution admins |
 | `/submit-fdr` | FDR submission with live maturity calculation, drag-and-drop evidence, optional renewal parent | Institution administrators only |
@@ -32,6 +46,9 @@ AICTE Suraksha replaces spreadsheet-based tracking of institutional security dep
 | `/renewals` | Succession chains, renewal timeline, 180-day renewal window | All roles, institution-scoped for institution admins |
 | `/releases` | Three-stage release approval, eligibility checks, printable authorisation receipt and dispatch reference | All roles with stage-specific actions |
 | `/audit` | Immutable event log with action/entity/actor filters and JSON before/after diff viewer | Scrutiny officers and Bureau Head only |
+| `/about` | Portal purpose, module map, lifecycle, roles and authority matrix | All authenticated roles |
+| `/help` | Role-based workflow guidance, quick-start destinations, FAQs and keyboard shortcuts | All authenticated roles |
+| `/security` | Security posture, control domains, evidence pipeline, session model and assurance matrix | All authenticated roles |
 
 Supporting APIs:
 
@@ -42,17 +59,15 @@ Supporting APIs:
 | `GET /api/health` | Database readiness probe |
 | `GET /api/cron/refresh-statuses` | Date-derived status refresh; requires `Authorization: Bearer $CRON_SECRET` |
 
-## Roles and demo accounts
+## Roles and authority
 
-The evaluation build intentionally has **no login form**. The portal opens as the Regulation Bureau Head and the top-navigation role switcher exchanges a signed demo identity. Every request still resolves the user from the database and enforces RBAC server-side.
-
-| Role | Demo user | Scope |
+| Role | Scope | Key capabilities |
 | --- | --- | --- |
-| `REGULATION_BUREAU_HEAD` | Dr. Rajeshwar S. Chauhan · `head@aicte.gov.in` | Bureau-wide read access; final release approval/rejection; audit access |
-| `AICTE_SCRUTINY_OFFICER` | Arjun Mehta · `scrutiny@aicte.gov.in` | Bureau-wide scrutiny; bank verification, discrepancy flagging, release recommendation, audit access |
-| `INSTITUTION_ADMIN` | Dr. Kavya Menon · `admin@niet.ac.in` | National Institute of Engineering & Technology only; submit FDRs, upload evidence, request releases |
+| `REGULATION_BUREAU_HEAD` | Bureau-wide read access | Final release approval or rejection; audit access |
+| `AICTE_SCRUTINY_OFFICER` | Bureau-wide scrutiny | Bank verification, discrepancy flagging, release recommendation, audit access |
+| `INSTITUTION_ADMIN` | Own institution only | Submit FDRs, upload evidence, raise renewal and release requests |
 
-Additional seeded institution administrators exist for every institution. The role switcher always selects the canonical demo user for the chosen role.
+Permissions are checked on the server. Institution administrators are filtered to their `institution_id` in the repository, renewal, release, dashboard, export, and document queries. Audit access is reserved for scrutiny officers and the Bureau Head.
 
 ## Workflows
 
@@ -77,7 +92,7 @@ Institution admin                     AICTE scrutiny officer
 
 ### 2. Renewal succession
 
-Renewals are represented by `fdr_instruments.parent_fdr_id`. The original `fdr_status` enum stays exactly as specified; the UI derives a **Renewed** presentation when a successor exists. Parent records remain visible for audit.
+Renewals are represented by `fdr_instruments.parent_fdr_id`. The original `fdr_status` enum stays as specified; the UI derives a **Renewed** presentation when a successor exists. Parent records remain visible for audit.
 
 ```
 FDR-2021-041  (Matured, parent)
@@ -143,15 +158,16 @@ Next.js server components ── Drizzle ORM ── PostgreSQL (Docker) or Neon
 
 | Layer | Choice |
 | --- | --- |
-| Framework | Next.js 15.5 App Router, React 19 |
-| Language | TypeScript 5.9, strict mode |
-| Styling | Tailwind CSS 3, shadcn-style Radix primitives |
-| Forms and validation | React Hook Form + Zod 4 (server actions revalidate) |
-| Database | PostgreSQL 16, Drizzle ORM 0.45 |
+| Framework | Next.js 16.4 App Router, React 19.3 |
+| Language | TypeScript 7.0, strict mode |
+| Styling | Tailwind CSS 4.3, shadcn-style Radix primitives, tw-animate-css |
+| Forms and validation | React Hook Form 7 + Zod 4 (server actions revalidate) |
+| Database | PostgreSQL 16, Drizzle ORM 0.45, Drizzle Kit 0.31 |
 | Drivers | Neon WebSocket Pool for Neon URLs; `pg` Pool locally |
-| Charts | Recharts 3 |
-| Documents | PDF-lib generated demo documents; AES-256-GCM local vault |
-| Tests | Vitest 3 |
+| Charts | Recharts 3.10 |
+| Documents | PDF-lib generated evidence; AES-256-GCM local vault |
+| Authentication | Email/password, scrypt hashes, signed HttpOnly session cookie |
+| Tests | Vitest 5 |
 | Icons | Lucide React |
 
 ### Data model
@@ -159,7 +175,7 @@ Next.js server components ── Drizzle ORM ── PostgreSQL (Docker) or Neon
 | Table | Key fields |
 | --- | --- |
 | `institutions` | `aicte_id`, `name`, `region`, `state`, `institution_type` |
-| `users` | `institution_id`, `name`, `email`, `role`, `designation`, `is_active` |
+| `users` | `institution_id`, `name`, `email`, `role`, `designation`, `is_active`, `password_hash` |
 | `fdr_instruments` | institution, FDR number, bank/branch/IFSC, amount, issue/maturity dates, status, verification, `parent_fdr_id`, verification snapshot, `submitted_by`, `verified_by` |
 | `fdr_documents` | FDR, document type, file URL/name, MIME, size, SHA-256, storage key, uploader |
 | `release_requests` | FDR, requester, reason, status, officer notes, scrutiny/approval actors and timestamps, rejection reason, dispatch reference |
@@ -167,11 +183,11 @@ Next.js server components ── Drizzle ORM ── PostgreSQL (Docker) or Neon
 
 Indexes cover institution, status, maturity, parent, release state, audit entity/actor/action/date. CHECK constraints keep deposits positive; partial unique indexes prevent duplicate active release cases and duplicate dispatch references.
 
-### Seeded demo scenarios
+### Seeded register
 
 The seed is date-relative, so the portal always has live, expiring, overdue, verified, discrepancy, renewal, and release scenarios.
 
-| Record | Use it to demonstrate |
+| Record | What it shows |
 | --- | --- |
 | `FDR-2024-118` (NIET) | Active, bank-confirmed, split-screen document preview |
 | `FDR-2025-067` (NIET) | Expiring soon, inside the 30-day window |
@@ -186,7 +202,7 @@ The seed is date-relative, so the portal always has live, expiring, overdue, ver
 
 ### Prerequisites
 
-- Node.js 20+ (Node 22 LTS recommended) and npm
+- Node.js 20.9+ (Node 22 LTS recommended) and npm
 - Docker Desktop (for the local PostgreSQL container) or a Neon database
 - Chrome, Edge, or Firefox for the PDF preview
 
@@ -231,6 +247,7 @@ CRON_SECRET=<base64 32 bytes>
 # APP_URL=http://localhost:3000
 # DATABASE_POOL_MAX=5
 # DATABASE_DRIVER=neon
+# SEED_ACCOUNT_PASSWORD=Aicte@2026
 ```
 
 > Keep `DOCUMENT_ENCRYPTION_KEY` stable. Changing it makes previously stored documents unreadable. In production, load it from a secrets manager, not a committed file.
@@ -242,7 +259,7 @@ npm install
 npm run db:setup
 ```
 
-`db:setup` pushes the Drizzle schema and runs the deterministic demo seed. Re-running it resets the demo data and regenerates the encrypted document vault.
+`db:setup` pushes the Drizzle schema and runs the deterministic seed. Re-running it resets registered records and regenerates the encrypted document vault.
 
 ### 4. Run
 
@@ -250,7 +267,7 @@ npm run db:setup
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The root redirects to `/dashboard`.
+Open [http://localhost:3000](http://localhost:3000) and sign in with a seeded account. The root redirects to `/login` when there is no active session.
 
 Production check:
 
@@ -264,7 +281,7 @@ npm run start
 Point `DATABASE_URL` at the pooled Neon connection string and set SSL as needed:
 
 ```dotenv
-DATABASE_URL=postgresql://<user>:<password>@<endpoint>-pooler.<region>.aws.neon.tech/<database>?sslmode=require
+DATABASE_URL=postgresql://<user>:<password>@<endpoint>-pooler.<region>.aws.neon.tech/<database>?sslmode=require&uselibpqcompat=true
 DATABASE_SSL=true
 # DATABASE_DRIVER=neon  # optional; auto-detected for neon.tech URLs
 ```
@@ -276,7 +293,7 @@ npm run db:push
 npm run db:seed
 ```
 
-The app auto-selects the Neon WebSocket driver for Neon URLs; `pg` is used locally and in CI. Both drivers support Drizzle transactions.
+The app auto-selects the Neon WebSocket driver for Neon URLs; `pg` is used locally and in CI. Both drivers support Drizzle transactions. `uselibpqcompat=true` keeps current libpq-compatible SSL behaviour for `pg`.
 
 ## Scripts
 
@@ -291,8 +308,8 @@ The app auto-selects the Neon WebSocket driver for Neon URLs; `pg` is used local
 | `npm run db:push` | Push the schema directly to PostgreSQL |
 | `npm run db:migrate` | Apply generated migrations |
 | `npm run db:setup` | Push schema with `--force`, then seed |
-| `npm run db:reset` | Reset demo data with the same push-and-seed flow |
-| `npm run db:seed` | Truncate and re-seed demo data only |
+| `npm run db:reset` | Reset registered records with the same push-and-seed flow |
+| `npm run db:seed` | Truncate and re-seed the register only |
 | `npm run db:studio` | Open Drizzle Studio |
 
 ## Tests
@@ -306,35 +323,40 @@ npm run build
 Current coverage: **34 tests across 3 suites**.
 
 - `src/lib/utils.test.ts` — timezone-safe day maths, Indian currency formatting, maturity labels, effective status, CSV escaping, initials
-- `src/lib/validation.test.ts` — FDR submission, IFSC, issue/maturity dates, renewal parent UUID, bank verification, discrepancy remarks, release reason, head decision defaults, repository/audit filters
+- `src/lib/validation.test.ts` — FDR submission, IFSC, issue/maturity dates, renewal parent UUID, bank verification, discrepancy remarks, release reason, head decision defaults, repository/audit filters, login input
 - `src/lib/fdr-status.test.ts` — expiry boundaries, renewal eligibility, 180-day window, financial-year boundaries, dispatch reference format
 
 ### Manual acceptance scenarios
 
 | # | Scenario | Steps | Expected |
 | --- | --- | --- | --- |
-| 1 | Submission validation | As institution admin, open `/submit-fdr`; submit an invalid IFSC and maturity before issue | Field-level errors; no record created |
-| 2 | Valid submission | Fill all required fields, attach a PDF, submit | Success toast; record appears in `/repository` as institution-submitted; audit event written |
-| 3 | Bank verification | As scrutiny officer, open a pending record and verify with a confirmation reference | Verification becomes bank-confirmed; snapshot and audit diff recorded |
-| 4 | Discrepancy | As scrutiny officer, flag a discrepancy with a short remark, then a substantive one | Short remark rejected; substantive remark moves record to discrepancy-flagged |
-| 5 | Renewal | As institution admin, open `/renewals` and renew an eligible parent | New FDR with `parent_fdr_id`; chain renders parent → successor; parent is renewal-pending |
-| 6 | Release request | As institution admin, request release for an eligible FDR | Case enters pending scrutiny; FDR becomes release-requested |
-| 7 | Officer recommendation | As scrutiny officer, recommend or reject the pending case | Status changes to recommended or rejected; note required to reject |
-| 8 | Head approval | As Bureau Head, approve the recommended case | FDR becomes released; dispatch reference `AICTE/REL/FY/8HEX`; printable receipt appears |
-| 9 | Audit diff | As officer or head, open `/audit`, filter by FDR, inspect an event | Before/after JSON diff; append-only notice |
-| 10 | RBAC | Switch roles and open restricted routes | Institution admin is denied `/audit`; institution data stays scoped; head is read-only on scrutiny |
+| 1 | Sign in | Open `/login` and enter a seeded account with the wrong password, then the correct password | Inline error on failure; redirect to `/dashboard` on success |
+| 2 | Session guard | Sign out, then open `/repository` directly | Redirected to `/login`; protected content is not rendered |
+| 3 | Submission validation | As institution admin, open `/submit-fdr`; submit an invalid IFSC and maturity before issue | Field-level errors; no record created |
+| 4 | Valid submission | Fill all required fields, attach a PDF, submit | Success toast; record appears in `/repository` as institution-submitted; audit event written |
+| 5 | Bank verification | As scrutiny officer, open a pending record and verify with a confirmation reference | Verification becomes bank-confirmed; snapshot and audit diff recorded |
+| 6 | Discrepancy | As scrutiny officer, flag a discrepancy with a short remark, then a substantive one | Short remark rejected; substantive remark moves record to discrepancy-flagged |
+| 7 | Renewal | As institution admin, open `/renewals` and renew an eligible parent | New FDR with `parent_fdr_id`; chain renders parent → successor; parent is renewal-pending |
+| 8 | Release request | As institution admin, request release for an eligible FDR | Case enters pending scrutiny; FDR becomes release-requested |
+| 9 | Officer recommendation | As scrutiny officer, recommend or reject the pending case | Status changes to recommended or rejected; note required to reject |
+| 10 | Head approval | As Bureau Head, approve the recommended case | FDR becomes released; dispatch reference `AICTE/REL/FY/8HEX`; printable receipt appears |
+| 11 | Audit diff | As officer or head, open `/audit`, filter by FDR, inspect an event | Before/after JSON diff; append-only notice |
+| 12 | RBAC | Sign in as an institution admin, then open `/audit`; sign in as the Bureau Head and open a scrutiny record | Institution admin sees an access-denied panel; institution data stays scoped; head is read-only on scrutiny |
+| 13 | Resource pages | Open `/about`, `/help`, and `/security` from the sidebar, command palette, breadcrumbs, and footer | Pages render for every authenticated role with consistent navigation |
 
-Role switching is in the top navigation. If a page is denied, the portal renders an explicit access-denied panel rather than a redirect loop.
+The command palette opens with **Ctrl/Cmd + K** and searches every destination available to the signed-in role. Access-denied pages render an explicit panel rather than redirecting in a loop.
 
 ## Security model
 
 ### Authentication and session
 
+- Email and password sign-in against a salted scrypt hash (`N=16384`, `r=8`, `p=1`).
+- A dummy hash comparison runs for unknown accounts to reduce timing differences.
 - Signed HttpOnly cookie (`aicte_portal_session`) using HMAC-SHA256 over the user UUID.
 - Constant-time signature comparison.
 - `SameSite=Lax`, `Secure` in production, seven-day expiry.
 - No credentials or role claims are trusted from the client; the user is reloaded from PostgreSQL on every request.
-- Demo-only identity switcher. Replace `getCurrentUser` with AICTE SSO (OIDC/SAML) for production.
+- Sign-in and sign-out events are recorded in the audit trail.
 
 ### Authorization
 
@@ -355,7 +377,7 @@ Role switching is in the top navigation. If a page is denied, the portal renders
 
 ### Input, export, and audit
 
-- Zod validation on the server for submissions, verification, release decisions, filters, and role switching.
+- Zod validation on the server for submissions, verification, release decisions, filters, login input, and account actions.
 - Drizzle parameterised SQL; no string-built queries.
 - CSV export prefixes dangerous cells to mitigate spreadsheet formula injection.
 - `audit_logs` has a `BEFORE UPDATE OR DELETE` trigger that raises an exception; the table is append-only at the database level.
@@ -365,7 +387,7 @@ Role switching is in the top navigation. If a page is denied, the portal renders
 
 ### Production hardening checklist
 
-- Replace the demo role switcher with SSO, MFA, session rotation, and revocation.
+- Federate sign-in with AICTE SSO (OIDC/SAML), MFA, session rotation, and revocation.
 - Move documents to S3/R2/Vercel Blob with KMS-managed keys and malware scanning.
 - Add rate limiting, request-size limits at the edge, and bot protection.
 - Use managed PostgreSQL backups, point-in-time recovery, and least-privilege database roles.
@@ -413,10 +435,14 @@ src/
 │   │   ├── renewals/           # succession chains and renewal window
 │   │   ├── releases/           # three-stage release workflow
 │   │   ├── audit/              # filtered immutable event log
-│   │   ├── layout.tsx          # portal shell and RBAC identity
+│   │   ├── about/              # purpose, roles and authority matrix
+│   │   ├── help/               # workflow guidance and FAQs
+│   │   ├── security/           # controls, pipeline and assurance matrix
+│   │   ├── layout.tsx          # portal shell and authenticated session
 │   │   ├── loading.tsx
 │   │   ├── error.tsx
 │   │   └── not-found.tsx
+│   ├── login/                  # split-screen sign-in
 │   ├── api/
 │   │   ├── documents/[id]/     # authenticated encrypted streaming
 │   │   ├── export/fdrs/        # CSV and JSON export
@@ -424,11 +450,11 @@ src/
 │   │   └── health/
 │   ├── globals.css
 │   ├── layout.tsx
-│   └── page.tsx                # redirects to /dashboard
+│   └── page.tsx                # redirects to /dashboard or /login
 ├── components/
 │   ├── audit/                  # audit table, filters, JSON diff viewer
 │   ├── dashboard/              # Recharts analytics
-│   ├── navigation/             # sidebar, header, role switcher
+│   ├── navigation/             # sidebar, header, search, account menu
 │   ├── releases/               # queue, stepper, receipt
 │   ├── renewals/               # recursive renewal tree
 │   ├── scrutiny/               # split-pane verification panel
@@ -438,15 +464,16 @@ src/
 ├── db/
 │   ├── schema.ts               # tables, enums, relations, JSON types
 │   ├── index.ts                # Neon + node-postgres Drizzle facade
-│   ├── seed.ts                 # synthetic demo dataset + audit trigger
+│   ├── seed.ts                 # date-relative register + audit trigger
 │   └── seed-documents.ts       # generated PDF evidence
 └── lib/
     ├── actions/                # server actions for FDR, release, session
     ├── audit.ts                # audit writer
     ├── constants.ts            # labels, styles, roles, banks, states
     ├── fdr-status.ts           # maturity status and dispatch references
+    ├── password.ts             # scrypt hashing and timing equalisation
     ├── queries.ts              # scoped read models
-    ├── session.ts              # signed demo session and RBAC
+    ├── session.ts              # signed session and RBAC
     ├── storage.ts              # encrypted local document vault
     ├── utils.ts                # dates, INR, CSV, status helpers
     └── validation.ts           # Zod schemas and upload checks
@@ -456,7 +483,7 @@ src/
 
 - Deploy the Next.js app to a Node.js runtime (Vercel, containers, or a VM). Edge-only runtimes cannot use `pg` or the filesystem-backed vault.
 - Set `DATABASE_URL`, `DATABASE_SSL`, `SESSION_SECRET`, `DOCUMENT_ENCRYPTION_KEY`, and `CRON_SECRET` as platform secrets.
-- Run `npm run db:push` (or apply generated migrations) and `npm run db:seed` once against the target database. Do not seed a real production register with synthetic records.
+- Run `npm run db:push` (or apply generated migrations) and then `npm run db:seed` once against the target database. Set `SEED_ACCOUNT_PASSWORD` before seeding a shared environment.
 - The node-postgres driver works with any managed PostgreSQL. The Neon WebSocket driver is selected automatically for Neon URLs and supports Drizzle transactions.
 - Local document storage under `.data/` is **not durable** on serverless platforms. Replace `src/lib/storage.ts` with an object-store adapter before deployment.
 - Schedule `GET /api/cron/refresh-statuses` with `Authorization: Bearer $CRON_SECRET`. Vercel Cron can supply this header when `CRON_SECRET` is configured, or use an external scheduler.
@@ -468,16 +495,16 @@ src/
 | Symptom | Fix |
 | --- | --- |
 | Database connection refused on `127.0.0.1:5433` | Start Docker Desktop, then `docker start aicte-fdr-postgres` |
-| “Connect and seed the database” fallback | Confirm `DATABASE_URL`, run `npm run db:push`, then `npm run db:seed` |
+| Sign-in returns “The email address or password is incorrect” | Confirm the seeded email, run `npm run db:seed`, and use the password printed by the seed |
 | Empty repository or dashboard | Run `npm run db:seed` |
 | `SESSION_SECRET` or `DOCUMENT_ENCRYPTION_KEY` error | Fill both base64 32-byte values in `.env.local` |
 | Documents fail to open after a config change | The encryption key changed; restore the original key or re-seed |
 | Port 5433 already in use | Change the Docker port mapping and `DATABASE_URL` together |
 | PDF preview is blank | Use a browser with a PDF viewer; framing headers must permit same-origin preview (`SAMEORIGIN` / `frame-ancestors 'self'`) |
-| Want a clean demo | `npm run db:seed` resets records, documents, and audit events |
+| Want a clean register | `npm run db:seed` resets records, documents, and audit events |
 
-## Data and disclaimer
+## Seeded data notice
 
-All names, institutions, AICTE IDs, bank branches, FDR numbers, amounts, and evidence documents are **fictional and generated for evaluation**. The demo seed creates PDFs that resemble bank receipts but carry no legal validity.
+The seed creates a representative register with fictional institutions, users, FDR numbers, bank branches, amounts, and generated evidence documents. These records exist to exercise the workflow and carry no legal validity.
 
-This prototype is provided for evaluation and learning. It has not undergone a government security certification, accessibility audit, or production load test. Do not use it to store real security deposits, bank confirmations, or personal data without a full security, legal, and procurement review.
+The portal has not undergone a government security certification, accessibility audit, or production load test. Do not use it to store real security deposits, bank confirmations, or personal data without a full security, legal, and procurement review.

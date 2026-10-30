@@ -5,7 +5,7 @@ import path from "node:path";
 import { MAX_UPLOAD_BYTES } from "@/lib/validation";
 
 /**
- * Mock cloud storage adapter.
+ * Encrypted local document vault.
  *
  * Files are validated, SHA-256 hashed and AES-256-GCM encrypted at rest. The
  * returned URL is the stable portal document URL. Replacing this module with
@@ -80,7 +80,7 @@ export type UploadInput = {
   buffer: Buffer;
 };
 
-export async function uploadToMockCloudStorage(input: UploadInput): Promise<StoredObject> {
+export async function storeDocument(input: UploadInput): Promise<StoredObject> {
   if (!input.buffer.length) throw new Error("The uploaded document is empty.");
   if (input.buffer.length > MAX_UPLOAD_BYTES) throw new Error("Each document must be 10 MB or smaller.");
   const detected = sniff(input.buffer);
@@ -105,9 +105,9 @@ export async function uploadToMockCloudStorage(input: UploadInput): Promise<Stor
   };
 }
 
-export async function uploadFileToMockCloudStorage(file: File): Promise<StoredObject> {
+export async function storeUploadedFile(file: File): Promise<StoredObject> {
   const buffer = Buffer.from(await file.arrayBuffer());
-  return uploadToMockCloudStorage({
+  return storeDocument({
     fileName: file.name,
     mimeType: file.type,
     buffer,
@@ -125,5 +125,5 @@ export async function storeSeedDocument(
   mimeType: string,
   buffer: Buffer,
 ): Promise<StoredObject> {
-  return uploadToMockCloudStorage({ fileName, mimeType, buffer });
+  return storeDocument({ fileName, mimeType, buffer });
 }

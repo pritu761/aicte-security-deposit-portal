@@ -1,11 +1,11 @@
 /**
- * Rich, deterministic demo seed for the AICTE Security Deposit & FDR portal.
+ * Deterministic register seed for the AICTE Security Deposit & FDR portal.
  *
  * Run: npm run db:setup   (schema first, on a fresh database)
  *      npm run db:seed
  *
- * All institutions, officers and financial instruments are illustrative demo
- * records dated relative to the day the seed is executed.
+ * Institutions, officers and financial instruments are representative records
+ * dated relative to the day the seed is executed.
  */
 import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
@@ -27,11 +27,13 @@ import {
   type VerificationStatus,
 } from "@/db/schema";
 import { dispatchReference } from "@/lib/fdr-status";
-import { uploadToMockCloudStorage } from "@/lib/storage";
+import { hashPassword } from "@/lib/password";
+import { storeDocument } from "@/lib/storage";
 import { createBankConfirmationPdf, createDischargeVoucherPdf, createFdrCertificatePdf, type FdrPdfData } from "@/db/seed-documents";
-import { DEMO_INSTITUTION_ID } from "@/lib/constants";
+import { PRIMARY_INSTITUTION_ID } from "@/lib/constants";
 
 const UPLOAD_DIR = path.join(process.cwd(), ".data", "uploads");
+const SEED_ACCOUNT_PASSWORD = process.env.SEED_ACCOUNT_PASSWORD?.trim() || "Aicte@2026";
 const now = new Date();
 
 function daysAgo(days: number, hour = 10, minute = 30): Date {
@@ -45,7 +47,7 @@ function dateOffset(days: number): string {
 }
 
 function institutionId(index: number): string {
-  if (index === 0) return DEMO_INSTITUTION_ID;
+  if (index === 0) return PRIMARY_INSTITUTION_ID;
   // Keep every UUID group at its exact RFC length (12 hex chars in the last group).
   return `b2f5d4b8-3c4a-4f0e-9a6d-3d1f5e7a8d${String(index).padStart(2, "0")}`;
 }
@@ -65,7 +67,7 @@ type InstitutionSeed = {
 
 const institutionSeeds: InstitutionSeed[] = [
   {
-    id: DEMO_INSTITUTION_ID,
+    id: PRIMARY_INSTITUTION_ID,
     aicteId: "1-3324918231",
     name: "National Institute of Engineering & Technology",
     region: "South",
@@ -256,7 +258,7 @@ type FdrSeed = {
 };
 
 const fdrSeeds: FdrSeed[] = [
-  // 0 — National Institute of Engineering & Technology (demo institution)
+  // 0 — National Institute of Engineering & Technology (primary institution)
   { key: "niet-sbi-active", institution: 0, fdrNumber: "FDR-2024-118", bank: "State Bank of India", branch: "Bengaluru Main", ifsc: "SBIN0001234", amount: 7_500_000, issueOffset: -260, maturityOffset: 420, status: "ACTIVE", verification: "BANK_CONFIRMED", verifiedOffset: 254 },
   { key: "niet-canara-expiring", institution: 0, fdrNumber: "FDR-2025-067", bank: "Canara Bank", branch: "MG Road", ifsc: "CNRB0002345", amount: 5_000_000, issueOffset: -240, maturityOffset: 18, status: "EXPIRING_SOON", verification: "BANK_CONFIRMED", verifiedOffset: 232 },
   { key: "niet-hdfc-released", institution: 0, fdrNumber: "FDR-2023-042", bank: "HDFC Bank", branch: "Koramangala", ifsc: "HDFC0000456", amount: 2_500_000, issueOffset: -700, maturityOffset: -60, status: "RELEASED", verification: "BANK_CONFIRMED", verifiedOffset: 690 },
@@ -417,7 +419,7 @@ const releaseSeeds: ReleaseSeed[] = [
 /* -------------------------------------------------------------------------- */
 
 async function seed() {
-  console.log("Seeding AICTE FDR portal demo data…");
+  console.log("Seeding the AICTE FDR portal register…");
   await rm(UPLOAD_DIR, { recursive: true, force: true });
   await mkdir(UPLOAD_DIR, { recursive: true });
 
@@ -436,11 +438,16 @@ async function seed() {
     createdAt: daysAgo(900),
   }));
 
-  const userRows = userSeeds.map((user) => ({
+  const passwordHashes = await Promise.all(
+    userSeeds.map(() => hashPassword(SEED_ACCOUNT_PASSWORD)),
+  );
+
+  const userRows = userSeeds.map((user, index) => ({
     id: user.id,
     institutionId: user.institutionId,
     name: user.name,
     email: user.email,
+    passwordHash: passwordHashes[index],
     role: user.role,
     designation: user.designation,
     phone: user.phone,
@@ -475,7 +482,7 @@ async function seed() {
     createdAt: Date;
   }[] = [];
 
-  console.log("Generating encrypted demonstration documents…");
+  console.log("Generating encrypted evidence documents…");
 
   for (const seedRow of fdrSeeds) {
     const id = fdrIdByKey.get(seedRow.key) as string;
@@ -511,7 +518,7 @@ async function seed() {
     };
 
     const originalPdf = await createFdrCertificatePdf(pdfData);
-    const original = await uploadToMockCloudStorage({
+    const original = await storeDocument({
       fileName: `${seedRow.fdrNumber.replace(/[^A-Za-z0-9_-]/g, "_")}_FDR_Certificate.pdf`,
       mimeType: "application/pdf",
       buffer: originalPdf,
@@ -536,7 +543,7 @@ async function seed() {
         reference: confirmationRef,
         confirmationDate: verifiedAt.toISOString().slice(0, 10),
       });
-      const confirmation = await uploadToMockCloudStorage({
+      const confirmation = await storeDocument({
         fileName: `${seedRow.fdrNumber.replace(/[^A-Za-z0-9_-]/g, "_")}_Bank_Confirmation.pdf`,
         mimeType: "application/pdf",
         buffer: confirmationPdf,
@@ -562,7 +569,7 @@ async function seed() {
         dispatchReference: dispatchReference(releaseIds.get(seedRow.key) as string, daysAgo(release.approvedDaysAgo ?? 20)),
         releaseDate: dateOffset(-(release.approvedDaysAgo ?? 20)),
       });
-      const discharge = await uploadToMockCloudStorage({
+      const discharge = await storeDocument({
         fileName: `${seedRow.fdrNumber.replace(/[^A-Za-z0-9_-]/g, "_")}_Discharge_Voucher.pdf`,
         mimeType: "application/pdf",
         buffer: dischargePdf,
@@ -888,7 +895,12 @@ async function seed() {
   console.log(`  Audit events : ${auditEvents.length}`);
   console.log(`  Live value   : Rs. ${(totalValue / 1_00_00_000).toFixed(2)} Cr`);
   console.log("");
-  console.log("Open the portal at http://localhost:3000 and use the role switcher to evaluate all three roles.");
+  console.log("Open the portal at http://localhost:3000 and sign in with a seeded account.");
+  console.log(
+    process.env.SEED_ACCOUNT_PASSWORD
+      ? "  Password     : supplied through SEED_ACCOUNT_PASSWORD"
+      : `  Password     : ${SEED_ACCOUNT_PASSWORD} (set SEED_ACCOUNT_PASSWORD to override)`,
+  );
 }
 
 seed()

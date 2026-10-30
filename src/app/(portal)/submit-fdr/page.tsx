@@ -24,7 +24,7 @@ export default async function SubmitFdrPage({
       <AccessDenied
         user={user}
         title="Submission is an institution action"
-        description="FDRs and renewal instruments are filed by the institution administrator. Use the demo role switcher to open the institution workspace."
+        description="FDRs and renewal instruments are filed by the institution administrator. Sign in with an institution account to open this workspace."
         requiredRole="Institution Administrator"
       />
     );

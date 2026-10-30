@@ -43,7 +43,7 @@ export function AccessDenied({
         </Button>
       </div>
       <p className="mt-5 text-[11px] text-muted-foreground">
-        Use the demo role switcher in the top navigation to evaluate another role.
+        Access is assigned by role. Contact the Regulation Bureau if your responsibilities change.
       </p>
     </div>
   );

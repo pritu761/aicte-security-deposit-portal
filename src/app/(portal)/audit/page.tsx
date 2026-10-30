@@ -115,9 +115,9 @@ export default async function AuditPage({
       />
 
       <p className="text-[10.5px] leading-relaxed text-muted-foreground">
-        Retention notice: this demonstration log is retained for the life of the prototype
-        database. Production deployments should follow the AICTE records-retention schedule and
-        forward sealed audit exports to the departmental record office.
+        Retention notice: audit events are retained in the live register and protected by an
+        append-only database trigger. Operational deployments should also forward sealed audit
+        exports to the departmental record office in line with the AICTE records-retention schedule.
       </p>
     </div>
   );

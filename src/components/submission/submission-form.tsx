@@ -120,7 +120,7 @@ function FileDropzone({
   onFile,
   onClear,
   error,
-  mockPath,
+  vaultPath,
 }: {
   id: string;
   label: string;
@@ -130,7 +130,7 @@ function FileDropzone({
   onFile: (file: File) => void;
   onClear: () => void;
   error?: string;
-  mockPath: string;
+  vaultPath: string;
 }) {
   const [dragging, setDragging] = useState(false);
 
@@ -166,7 +166,7 @@ function FileDropzone({
             <p className="mt-0.5 text-[10px] text-muted-foreground">
               {formatFileSize(file.size)} · verified type {file.type || "document"}
             </p>
-            <p className="mt-1 truncate font-mono text-[9px] text-teal-800/70">{mockPath}</p>
+            <p className="mt-1 truncate font-mono text-[9px] text-teal-800/70">{vaultPath}</p>
           </div>
           <button
             type="button"
@@ -452,7 +452,7 @@ export function SubmissionForm({
           ? "warning"
           : "success";
 
-  const mockBase = `${institution.aicteId.replace(/[^A-Za-z0-9]/g, "")}/${new Date().getFullYear()}`;
+  const vaultBase = `${institution.aicteId.replace(/[^A-Za-z0-9]/g, "")}/${new Date().getFullYear()}`;
 
   async function onSubmit(values: FormValues) {
     setServerError(null);
@@ -848,7 +848,7 @@ export function SubmissionForm({
               }}
               onClear={() => setOriginalFile(null)}
               error={fileErrors.original}
-              mockPath={`vault://aicte-fdr/${mockBase}/${originalFile?.name ?? "original-fdr.pdf"}`}
+              vaultPath={`vault://aicte-fdr/${vaultBase}/${originalFile?.name ?? "original-fdr.pdf"}`}
             />
             <FileDropzone
               id="bankConfirmation"
@@ -861,7 +861,7 @@ export function SubmissionForm({
               }}
               onClear={() => setBankFile(null)}
               error={fileErrors.bank}
-              mockPath={`vault://aicte-fdr/${mockBase}/${bankFile?.name ?? "bank-confirmation.pdf"}`}
+              vaultPath={`vault://aicte-fdr/${vaultBase}/${bankFile?.name ?? "bank-confirmation.pdf"}`}
             />
           </CardContent>
         </Card>
@@ -975,10 +975,11 @@ export function SubmissionForm({
         </Card>
 
         <div className="rounded-lg border border-amber-200 bg-amber-50/70 p-3 text-[10px] leading-relaxed text-amber-900">
-          <p className="font-semibold">Demonstration data notice</p>
+          <p className="font-semibold">Document handling</p>
           <p className="mt-0.5">
-            This prototype stores synthetic records only. Uploaded documents are encrypted in a
-            local mock vault; do not upload real financial instruments.
+            Uploaded evidence is validated, SHA-256 fingerprinted and encrypted with AES-256-GCM
+            in the portal&apos;s document vault. Access is limited to authorised roles and every
+            upload is recorded in the audit trail.
           </p>
         </div>
       </aside>

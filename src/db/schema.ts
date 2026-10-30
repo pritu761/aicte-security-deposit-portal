@@ -116,6 +116,7 @@ export const users = pgTable(
     }),
     name: varchar("name", { length: 160 }).notNull(),
     email: varchar("email", { length: 200 }).notNull(),
+    passwordHash: varchar("password_hash", { length: 255 }).notNull(),
     role: userRoleEnum("role").notNull(),
     designation: varchar("designation", { length: 160 }),
     phone: varchar("phone", { length: 24 }),

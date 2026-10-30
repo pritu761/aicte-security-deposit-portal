@@ -4,10 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BadgeCheck,
+  BookOpen,
   Building2,
   Database,
   FilePlus2,
   LayoutDashboard,
+  LifeBuoy,
   RefreshCw,
   ScrollText,
   SearchCheck,
@@ -71,6 +73,14 @@ const groups: { label: string; items: NavItem[] }[] = [
       },
     ],
   },
+  {
+    label: "Resources",
+    items: [
+      { href: "/about", label: "About the portal", icon: BookOpen },
+      { href: "/help", label: "Help centre", icon: LifeBuoy },
+      { href: "/security", label: "Security & assurance", icon: ShieldCheck },
+    ],
+  },
 ];
 
 export function Sidebar({
@@ -104,8 +114,8 @@ export function Sidebar({
       ) : null}
       <aside
         className={cn(
-          "z-50 flex w-[264px] shrink-0 flex-col bg-navy-900 text-white lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0",
-          "fixed inset-y-0 left-0 -translate-x-full transition-transform duration-200 ease-out lg:relative",
+          "z-50 flex w-[264px] shrink-0 flex-col bg-navy-900 text-white lg:sticky lg:top-0 lg:h-dvh lg:self-start lg:translate-x-0",
+          "fixed inset-y-0 left-0 -translate-x-full transition-transform duration-200 ease-out",
           open && "translate-x-0",
         )}
         aria-label="Primary navigation"
@@ -210,11 +220,13 @@ export function Sidebar({
               </div>
             </div>
             <p className="mt-2 text-[10px] leading-relaxed text-white/40">
-              {ROLE_SHORT_LABELS[role]} access. Role switching is enabled for demonstration.
+              {ROLE_SHORT_LABELS[role]} access scope. Permissions are enforced on every request
+              and action.
             </p>
           </div>
           <p className="px-1 text-[9.5px] leading-relaxed text-white/30">
-            Prototype build 1.0 · Synthetic data only. Not for official AICTE use.
+            AICTE Suraksha · Secure regulatory workspace. Document access and workflow actions
+            are recorded.
           </p>
         </div>
       </aside>
