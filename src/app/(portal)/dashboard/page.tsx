@@ -119,7 +119,7 @@ export default async function DashboardPage() {
               </Button>
             ) : user.role === "AICTE_SCRUTINY_OFFICER" ? (
               <Button asChild size="sm">
-                <Link href="/repository?verification=INSTITUTION_SUBMITTED">
+                <Link href="/scrutiny">
                   <SearchCheck className="h-4 w-4" aria-hidden />
                   Open scrutiny queue
                 </Link>
@@ -497,6 +497,12 @@ export default async function DashboardPage() {
                     compact
                   />
                 )}
+                <Button asChild variant="ghost" size="sm" className="mt-3 w-full justify-between">
+                  <Link href="/scrutiny">
+                    Open full scrutiny queue
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           ) : null}

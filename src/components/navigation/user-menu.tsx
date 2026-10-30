@@ -34,7 +34,7 @@ function roleLink(role: UserRole): { href: string; label: string; icon: typeof S
   }
   if (role === "AICTE_SCRUTINY_OFFICER") {
     return {
-      href: "/repository?verification=INSTITUTION_SUBMITTED",
+      href: "/scrutiny",
       label: "Open scrutiny queue",
       icon: SearchCheck,
     };

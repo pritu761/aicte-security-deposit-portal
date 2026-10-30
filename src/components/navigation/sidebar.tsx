@@ -60,7 +60,7 @@ const groups: { label: string; items: NavItem[] }[] = [
     label: "Regulatory desk",
     items: [
       {
-        href: "/repository?verification=INSTITUTION_SUBMITTED",
+        href: "/scrutiny",
         label: "Scrutiny queue",
         icon: SearchCheck,
         roles: ["AICTE_SCRUTINY_OFFICER", "REGULATION_BUREAU_HEAD"],

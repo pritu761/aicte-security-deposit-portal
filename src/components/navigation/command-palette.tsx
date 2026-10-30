@@ -76,11 +76,11 @@ const commands: CommandItem[] = [
   },
   {
     label: "Scrutiny queue",
-    description: "Submissions awaiting bank confirmation",
-    href: "/repository?verification=INSTITUTION_SUBMITTED",
+    description: "Pending submissions, discrepancies and recent verifications",
+    href: "/scrutiny",
     icon: SearchCheck,
     roles: ["AICTE_SCRUTINY_OFFICER", "REGULATION_BUREAU_HEAD"],
-    keywords: "pending review verify",
+    keywords: "pending review verify ageing queue discrepancy",
   },
   {
     label: "Immutable audit trail",

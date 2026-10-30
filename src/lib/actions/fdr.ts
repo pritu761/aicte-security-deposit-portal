@@ -38,6 +38,7 @@ import {
 function revalidateFdr(fdrId: string) {
   revalidatePath("/dashboard");
   revalidatePath("/repository");
+  revalidatePath("/scrutiny");
   revalidatePath("/renewals");
   revalidatePath("/releases");
   revalidatePath("/audit");

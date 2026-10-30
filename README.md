@@ -44,6 +44,7 @@ Passwords are stored as salted scrypt hashes. The signed session cookie carries 
 | `/dashboard` | Portfolio value, active/expiring/overdue counts, bank and maturity charts, action centre, recent activity | All roles, scoped by institution for institution admins |
 | `/repository` | Dense searchable FDR register with status, verification, state and region filters; CSV/JSON export | All roles, institution-scoped for institution admins |
 | `/submit-fdr` | FDR submission with live maturity calculation, drag-and-drop evidence, optional renewal parent | Institution administrators only |
+| `/scrutiny` | Dedicated verification queue: age-ranked pending submissions, evidence counts, discrepancy watch and latest bank confirmations | Scrutiny officers and Bureau Head only |
 | `/scrutiny/[id]` | Split-screen document preview beside institution/bank particulars; verify, flag discrepancy, add observation or document | All roles; write actions for scrutiny officers, read-only for Bureau Head, own-institution only for institution admins |
 | `/renewals` | Succession chains, renewal timeline, 180-day renewal window | All roles, institution-scoped for institution admins |
 | `/releases` | Three-stage release approval, eligibility checks, printable authorisation receipt and dispatch reference | All roles with stage-specific actions |
@@ -91,6 +92,7 @@ Institution admin                     AICTE scrutiny officer
 - Each upload is limited to 10 MB, content-sniffed as PDF/PNG/JPEG, hashed with SHA-256, and stored as an AES-256-GCM envelope.
 - A renewal successor may reference a predecessor inside the **180-day renewal window**; the parent becomes `RENEWAL_PENDING`.
 - Verification records a bank confirmation reference, a JSON snapshot of the authorised particulars, the verifying officer, and a timestamp.
+- The dedicated `/scrutiny` queue ranks pending submissions by time in queue, shows evidence counts, isolates open discrepancies, and lists the latest bank confirmations. Access is restricted to scrutiny officers and the Bureau Head.
 
 ### 2. Renewal succession
 
@@ -433,6 +435,7 @@ src/
 │   │   ├── dashboard/          # KPI cards, charts, action centre
 │   │   ├── repository/         # searchable register + exports
 │   │   ├── submit-fdr/         # institution submission page
+│   │   ├── scrutiny/           # age-ranked verification queue
 │   │   ├── scrutiny/[id]/      # record review and verification
 │   │   ├── renewals/           # succession chains and renewal window
 │   │   ├── releases/           # three-stage release workflow

@@ -291,7 +291,7 @@ export async function getDashboardData(user: SessionUser) {
       title: "Open scrutiny discrepancies",
       detail: "Records flagged by the scrutiny desk require institution action.",
       count: discrepancyCount,
-      href: "/repository?status=DISCREPANCY_FLAGGED",
+      href: isBureauUser(user) ? "/scrutiny#discrepancy-watch" : "/repository?status=DISCREPANCY_FLAGGED",
     });
   }
   if (pendingScrutiny && isBureauUser(user)) {
@@ -300,7 +300,7 @@ export async function getDashboardData(user: SessionUser) {
       title: "Submissions awaiting scrutiny",
       detail: "Verify documents or flag discrepancies to move cases forward.",
       count: pendingScrutiny,
-      href: "/repository?verification=INSTITUTION_SUBMITTED",
+      href: "/scrutiny",
     });
   }
   if (pendingReleases.length) {
@@ -556,6 +556,122 @@ export async function getRepositoryExportRows(
     ...mapFdr(row),
     hasSuccessor: successors.has(row.fdr.id),
   }));
+}
+
+/* -------------------------------------------------------------------------- */
+/* Scrutiny queue                                                             */
+/* -------------------------------------------------------------------------- */
+
+export type ScrutinyQueueItem = FdrRow & {
+  evidenceCount: number;
+  latestEvidenceAt: string | null;
+  ageDays: number;
+  verifierName: string | null;
+};
+
+export type ScrutinyQueueData = Awaited<ReturnType<typeof getScrutinyQueueData>>;
+
+export async function getScrutinyQueueData(user: SessionUser) {
+  if (!isBureauUser(user)) {
+    throw new Error("Scrutiny queue access is restricted to the Regulation Bureau.");
+  }
+
+  const verifier = alias(users, "queue_verifier");
+  const queueStatuses: VerificationStatus[] = [
+    "INSTITUTION_SUBMITTED",
+    "DISCREPANCY_FOUND",
+    "BANK_CONFIRMED",
+  ];
+  const today = todayISO();
+
+  const [rows, documentRows] = await Promise.all([
+    db
+      .select({
+        fdr: fdrInstruments,
+        institution: institutions,
+        verifierName: verifier.name,
+      })
+      .from(fdrInstruments)
+      .innerJoin(institutions, eq(fdrInstruments.institutionId, institutions.id))
+      .leftJoin(verifier, eq(fdrInstruments.verifiedBy, verifier.id))
+      .where(inArray(fdrInstruments.verificationStatus, queueStatuses))
+      .orderBy(asc(fdrInstruments.createdAt)),
+    db
+      .select({
+        fdrId: fdrDocuments.fdrId,
+        uploadedAt: fdrDocuments.uploadedAt,
+      })
+      .from(fdrDocuments)
+      .innerJoin(fdrInstruments, eq(fdrDocuments.fdrId, fdrInstruments.id))
+      .where(inArray(fdrInstruments.verificationStatus, queueStatuses))
+      .orderBy(desc(fdrDocuments.uploadedAt)),
+  ]);
+
+  const documentStats = new Map<string, { count: number; latestAt: Date | null }>();
+  for (const document of documentRows) {
+    const current = documentStats.get(document.fdrId) ?? { count: 0, latestAt: null };
+    current.count += 1;
+    if (!current.latestAt || document.uploadedAt > current.latestAt) {
+      current.latestAt = document.uploadedAt;
+    }
+    documentStats.set(document.fdrId, current);
+  }
+
+  const items: ScrutinyQueueItem[] = rows.map((row) => {
+    const fdr = mapFdr(row);
+    const evidence = documentStats.get(fdr.id);
+    return {
+      ...fdr,
+      evidenceCount: evidence?.count ?? 0,
+      latestEvidenceAt: iso(evidence?.latestAt),
+      ageDays: Math.max(0, daysUntil(today, fdr.createdAt.slice(0, 10))),
+      verifierName: row.verifierName,
+    };
+  });
+
+  const pending = items
+    .filter((item) => item.verificationStatus === "INSTITUTION_SUBMITTED")
+    .sort((a, b) => b.ageDays - a.ageDays);
+  const discrepancies = items
+    .filter((item) => item.verificationStatus === "DISCREPANCY_FOUND")
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const verified = items.filter((item) => item.verificationStatus === "BANK_CONFIRMED");
+
+  const pendingValue = pending.reduce((sum, item) => sum + toNumber(item.depositAmount), 0);
+  const discrepancyValue = discrepancies.reduce(
+    (sum, item) => sum + toNumber(item.depositAmount),
+    0,
+  );
+  const verifiedValue = verified.reduce((sum, item) => sum + toNumber(item.depositAmount), 0);
+  const pendingEvidence = pending.reduce((sum, item) => sum + item.evidenceCount, 0);
+  const discrepancyEvidence = discrepancies.reduce(
+    (sum, item) => sum + item.evidenceCount,
+    0,
+  );
+
+  return {
+    generatedAt: new Date().toISOString(),
+    today,
+    pending,
+    discrepancies,
+    recentlyVerified: [...verified]
+      .sort((a, b) => (b.verifiedAt ?? "").localeCompare(a.verifiedAt ?? ""))
+      .slice(0, 6),
+    pendingCount: pending.length,
+    pendingValue,
+    pendingEvidence,
+    pendingOver90: pending.filter((item) => item.ageDays > 90).length,
+    averageQueueDays: pending.length
+      ? Math.round(pending.reduce((sum, item) => sum + item.ageDays, 0) / pending.length)
+      : 0,
+    oldestQueueDays: pending[0]?.ageDays ?? 0,
+    discrepancyCount: discrepancies.length,
+    discrepancyValue,
+    discrepancyEvidence,
+    verifiedCount: verified.length,
+    verifiedValue,
+    evidenceOnFile: pendingEvidence + discrepancyEvidence,
+  };
 }
 
 /* -------------------------------------------------------------------------- */

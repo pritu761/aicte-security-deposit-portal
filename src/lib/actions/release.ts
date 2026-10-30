@@ -25,6 +25,7 @@ import { fieldString, success, toActionError } from "@/lib/actions/helpers";
 function revalidateRelease() {
   revalidatePath("/dashboard");
   revalidatePath("/repository");
+  revalidatePath("/scrutiny");
   revalidatePath("/releases");
   revalidatePath("/renewals");
   revalidatePath("/audit");

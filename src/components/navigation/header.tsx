@@ -37,7 +37,7 @@ const crumbs: Record<string, string> = {
   renewals: "Renewals & succession",
   releases: "Release authorisations",
   audit: "Immutable audit trail",
-  scrutiny: "Scrutiny & discrepancy desk",
+  scrutiny: "Scrutiny queue",
   about: "About the portal",
   help: "Help centre",
   security: "Security & assurance",

@@ -51,7 +51,7 @@ const quickStart = [
     title: "Verify bank evidence",
     description:
       "Compare declared particulars with the uploaded instrument and record the outcome.",
-    href: "/repository?verification=INSTITUTION_SUBMITTED",
+    href: "/scrutiny",
     icon: SearchCheck,
     audience: "Scrutiny officers",
   },
@@ -107,7 +107,7 @@ const roleGuides = [
     role: "AICTE scrutiny officer",
     icon: SearchCheck,
     accent: "bg-teal-500",
-    href: "/repository?verification=INSTITUTION_SUBMITTED",
+    href: "/scrutiny",
     cta: "Open scrutiny queue",
     steps: [
       "Work the scrutiny queue and open the split-screen record review.",

@@ -39,7 +39,7 @@ import {
   RELEASE_STATUS_STYLES,
 } from "@/lib/constants";
 import { getFdrDetail, type FdrDetail } from "@/lib/queries";
-import { getCurrentUser } from "@/lib/session";
+import { getCurrentUser, isBureauUser } from "@/lib/session";
 import {
   formatDate,
   formatDateTime,
@@ -104,8 +104,8 @@ export default async function ScrutinyDetailPage({
   return (
     <div className="space-y-5">
       <PageHeader
-        backHref="/repository"
-        backLabel="Back to FDR repository"
+        backHref={isBureauUser(user) ? "/scrutiny" : "/repository"}
+        backLabel={isBureauUser(user) ? "Back to scrutiny queue" : "Back to FDR repository"}
         eyebrow={`${detail.institution.name} · ${detail.institution.aicteId}`}
         title={fdr.fdrNumber}
         description={`${fdr.issuingBank}${fdr.branchName ? ` · ${fdr.branchName}` : ""} · ${fdr.ifscCode}`}
