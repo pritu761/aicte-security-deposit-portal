@@ -395,7 +395,7 @@ export default function SecurityPage() {
               return (
                 <li key={stage.title} className="relative">
                   <div className="flex items-center gap-2 lg:block">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-navy-100 bg-white text-navy-700 shadow-xs">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-navy-100 bg-card text-navy-700 shadow-xs">
                       <Icon className="h-4 w-4" aria-hidden />
                     </span>
                     {index < evidencePipeline.length - 1 ? (

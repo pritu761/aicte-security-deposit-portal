@@ -35,7 +35,9 @@ function crores(value: number): number {
 
 const tooltipStyle = {
   borderRadius: 10,
-  border: "1px solid #e2e8f0",
+  border: "1px solid var(--chart-tooltip-border)",
+  background: "var(--chart-tooltip-bg)",
+  color: "var(--chart-tooltip-fg)",
   boxShadow: "0 12px 40px -20px rgba(10,37,64,0.35)",
   fontSize: 12,
   padding: "8px 10px",
@@ -63,11 +65,11 @@ export function BankDistributionChart({ data }: { data: BankDatum[] }) {
           margin={{ top: 4, right: 28, bottom: 4, left: 4 }}
           barCategoryGap={12}
         >
-          <CartesianGrid horizontal={false} stroke="#e8edf3" strokeDasharray="3 3" />
+          <CartesianGrid horizontal={false} stroke="var(--chart-grid)" strokeDasharray="3 3" />
           <XAxis
             type="number"
             domain={[0, Math.ceil(max * 1.15)]}
-            tick={{ fill: "#64748b", fontSize: 10.5 }}
+            tick={{ fill: "var(--chart-axis)", fontSize: 10.5 }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(value) => `₹${value} Cr`}
@@ -76,12 +78,12 @@ export function BankDistributionChart({ data }: { data: BankDatum[] }) {
             type="category"
             dataKey="bank"
             width={132}
-            tick={{ fill: "#334155", fontSize: 10.5 }}
+            tick={{ fill: "var(--chart-axis-strong)", fontSize: 10.5 }}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
-            cursor={{ fill: "rgba(11,43,71,0.04)" }}
+            cursor={{ fill: "var(--chart-cursor)" }}
             contentStyle={tooltipStyle}
             formatter={(value) => [`₹${Number(value).toFixed(2)} Cr`, "Deposit value"]}
           />
@@ -116,16 +118,16 @@ export function MaturityTimelineChart({ data }: { data: TimelineDatum[] }) {
               <stop offset="100%" stopColor="#1e807d" stopOpacity={0.02} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} stroke="#e8edf3" strokeDasharray="3 3" />
+          <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="3 3" />
           <XAxis
             dataKey="label"
-            tick={{ fill: "#64748b", fontSize: 10.5 }}
+            tick={{ fill: "var(--chart-axis)", fontSize: 10.5 }}
             tickLine={false}
             axisLine={false}
             interval={0}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 10.5 }}
+            tick={{ fill: "var(--chart-axis)", fontSize: 10.5 }}
             tickLine={false}
             axisLine={false}
             width={54}
@@ -144,7 +146,7 @@ export function MaturityTimelineChart({ data }: { data: TimelineDatum[] }) {
             stroke="#1e807d"
             strokeWidth={2.2}
             fill="url(#maturityFill)"
-            activeDot={{ r: 4, strokeWidth: 2, fill: "#fff", stroke: "#1e807d" }}
+            activeDot={{ r: 4, strokeWidth: 2, fill: "var(--chart-pie-stroke)", stroke: "#1e807d" }}
             animationDuration={1000}
             animationEasing="ease-out"
           />
@@ -182,7 +184,7 @@ export function StatusDonutChart({ data }: { data: StatusDatum[] }) {
               innerRadius={54}
               outerRadius={78}
               paddingAngle={2}
-              stroke="#fff"
+              stroke="var(--chart-pie-stroke)"
               strokeWidth={2}
               animationDuration={900}
               animationEasing="ease-out"

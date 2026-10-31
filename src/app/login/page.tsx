@@ -8,10 +8,11 @@ import {
   Landmark,
   LockKeyhole,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 
 import { LoginForm } from "@/app/login/login-form";
+import { IndiaFlag } from "@/components/india-flag";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { APP_NAME, APP_SUBTITLE, ORGANISATION } from "@/lib/constants";
 import { getCurrentUser } from "@/lib/session";
 
@@ -43,7 +44,7 @@ export default async function LoginPage() {
   if (user) redirect("/dashboard");
 
   return (
-    <main id="main-content" className="min-h-dvh bg-[#f8f5ee] lg:grid lg:grid-cols-[1.05fr_minmax(440px,0.95fr)]">
+    <main id="main-content" className="min-h-dvh lg:grid lg:grid-cols-[1.05fr_minmax(440px,0.95fr)]">
       <section className="relative hidden min-h-dvh overflow-hidden bg-navy-950 text-white lg:flex lg:flex-col">
         <div className="navy-grid absolute inset-0 opacity-70" aria-hidden />
         <div
@@ -89,9 +90,9 @@ export default async function LoginPage() {
           </div>
 
           <div className="my-auto max-w-[575px] py-14">
-            <span className="inline-flex animate-rise items-center gap-1.5 rounded-full border border-saffron-300/20 bg-saffron-300/[0.08] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-saffron-200 [animation-delay:80ms]">
-              <Sparkles className="h-3 w-3" aria-hidden />
-              Regulation Bureau
+            <span className="inline-flex animate-rise items-center gap-2 rounded-full border border-saffron-300/20 bg-saffron-300/[0.08] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-saffron-200 [animation-delay:80ms]">
+              <IndiaFlag className="h-3 w-[18px]" />
+              Government of India · Regulation Bureau
             </span>
             <h1 className="font-display mt-5 animate-rise text-[2.7rem] font-semibold leading-[1.05] tracking-[-0.025em] text-white text-balance [animation-delay:140ms] xl:text-[3.25rem]">
               Every deposit.
@@ -172,7 +173,11 @@ export default async function LoginPage() {
         </div>
       </section>
 
-      <section className="flex min-h-dvh flex-col bg-[#fbfaf7]">
+      <section className="relative flex min-h-dvh flex-col bg-[#fbfaf7]/90 backdrop-blur-[2px] dark:bg-background/80">
+        <div className="absolute right-6 top-6 z-20 hidden lg:block">
+          <ThemeToggle className="border border-border bg-card/80 shadow-sm" />
+        </div>
+
         <div className="flex animate-fade-in items-center justify-between gap-4 border-b border-border/60 px-6 py-4 lg:hidden">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 text-saffron-200">
@@ -187,9 +192,12 @@ export default async function LoginPage() {
               </span>
             </span>
           </div>
-          <span className="rounded-full border border-border bg-white px-2 py-1 text-[9px] font-medium text-muted-foreground">
-            Secure
-          </span>
+          <div className="flex items-center gap-2">
+            <ThemeToggle className="border border-border bg-card/80" />
+            <span className="rounded-full border border-border bg-card px-2 py-1 text-[9px] font-medium text-muted-foreground">
+              Secure
+            </span>
+          </div>
         </div>
 
         <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-10 lg:px-14">
@@ -214,7 +222,7 @@ export default async function LoginPage() {
               <LoginForm />
             </div>
 
-            <div className="mt-8 flex animate-rise items-start gap-3 rounded-xl border border-border/80 bg-white px-4 py-3.5 shadow-card [animation-delay:240ms]">
+            <div className="mt-8 flex animate-rise items-start gap-3 rounded-xl border border-border/80 bg-card px-4 py-3.5 shadow-card [animation-delay:240ms]">
               <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                 <ShieldCheck className="h-4 w-4" aria-hidden />
               </span>
@@ -232,7 +240,10 @@ export default async function LoginPage() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-2 border-t border-border/60 px-6 py-4 text-[9.5px] text-muted-foreground sm:flex-row sm:px-8">
-          <p>© {new Date().getFullYear()} AICTE Regulation Bureau</p>
+          <p className="flex items-center gap-1.5">
+            <IndiaFlag className="h-2.5 w-[15px]" />© {new Date().getFullYear()} AICTE
+            Regulation Bureau
+          </p>
           <p className="flex items-center gap-1.5">
             <LockKeyhole className="h-3 w-3" aria-hidden />
             Authorised access only

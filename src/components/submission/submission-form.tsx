@@ -158,7 +158,7 @@ function FileDropzone({
 
       {file ? (
         <div className="flex items-center gap-3 rounded-lg border border-teal-200 bg-teal-50/50 p-3">
-          <span className="rounded-md bg-white p-2 text-teal-700 shadow-sm">
+          <span className="rounded-md bg-card p-2 text-teal-700 shadow-sm">
             <FileText className="h-4 w-4" aria-hidden />
           </span>
           <div className="min-w-0 flex-1">
@@ -171,7 +171,7 @@ function FileDropzone({
           <button
             type="button"
             onClick={onClear}
-            className="rounded-md p-1.5 text-muted-foreground hover:bg-white hover:text-destructive"
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-card hover:text-destructive"
             aria-label={`Remove ${file.name}`}
           >
             <Trash2 className="h-4 w-4" aria-hidden />

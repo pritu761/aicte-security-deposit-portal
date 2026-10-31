@@ -55,7 +55,7 @@ function SubmitButton({ buttonRef }: { buttonRef: React.Ref<HTMLButtonElement> }
       id="sign-in-submit"
       type="submit"
       disabled={pending}
-      className="button-sheen group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-navy-900 px-4 text-sm font-semibold text-white shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-navy-800 hover:shadow-[0_14px_34px_-14px_rgba(11,43,71,0.9)] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
+      className="button-sheen group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-primary/90 hover:shadow-glow active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
     >
       {pending ? (
         <>
@@ -101,7 +101,7 @@ export function LoginForm() {
 
   return (
     <form action={formAction} className="mt-8 space-y-5" noValidate>
-      <div className="rounded-xl border border-saffron-200/90 bg-saffron-50/60 p-3.5">
+      <div className="rounded-xl border border-saffron-200/90 bg-saffron-50/60 p-3.5 dark:border-saffron-500/25 dark:bg-saffron-500/10">
         <div className="flex items-center justify-between gap-2">
           <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-saffron-800">
             <Sparkles className="h-3 w-3" aria-hidden />
@@ -125,8 +125,8 @@ export function LoginForm() {
                 className={cn(
                   "group flex min-w-0 flex-col items-start rounded-lg border px-2 py-2 text-left transition-all duration-200",
                   selected
-                    ? "border-saffron-400 bg-white shadow-xs"
-                    : "border-border/80 bg-white/75 hover:-translate-y-0.5 hover:border-saffron-300 hover:bg-white hover:shadow-xs",
+                    ? "border-saffron-400 bg-card shadow-xs"
+                    : "border-border/80 bg-card/70 hover:-translate-y-0.5 hover:border-saffron-300 hover:bg-card hover:shadow-xs",
                 )}
               >
                 <span className="flex w-full items-center justify-between gap-1">
@@ -188,7 +188,7 @@ export function LoginForm() {
             onChange={() => setActiveDemo(null)}
             placeholder="name@aicte.gov.in"
             aria-invalid={state.error ? true : undefined}
-            className="h-11 w-full rounded-lg border border-input bg-white pl-10 pr-3 text-sm shadow-xs outline-none transition-all placeholder:text-muted-foreground/60 focus:border-primary/50 focus:ring-2 focus:ring-ring/25"
+            className="h-11 w-full rounded-lg border border-input bg-card pl-10 pr-3 text-sm shadow-xs outline-none transition-all placeholder:text-muted-foreground/60 focus:border-primary/50 focus:ring-2 focus:ring-ring/25"
           />
         </div>
       </div>
@@ -220,7 +220,7 @@ export function LoginForm() {
             onKeyUp={trackCapsLock}
             onBlur={() => setCapsLock(false)}
             aria-describedby={capsLock ? "caps-lock-hint" : undefined}
-            className="h-11 w-full rounded-lg border border-input bg-white pl-10 pr-11 text-sm shadow-xs outline-none transition-all placeholder:text-muted-foreground/60 focus:border-primary/50 focus:ring-2 focus:ring-ring/25"
+            className="h-11 w-full rounded-lg border border-input bg-card pl-10 pr-11 text-sm shadow-xs outline-none transition-all placeholder:text-muted-foreground/60 focus:border-primary/50 focus:ring-2 focus:ring-ring/25"
           />
           <button
             type="button"

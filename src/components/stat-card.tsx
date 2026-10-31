@@ -17,33 +17,33 @@ const tones: Record<
     accent: "bg-navy-800",
   },
   success: {
-    card: "border-emerald-200/70 bg-gradient-to-br from-emerald-50/60 to-card",
-    icon: "bg-emerald-100 text-emerald-800",
-    value: "text-emerald-950",
+    card: "border-emerald-200/70 bg-gradient-to-br from-emerald-50/60 to-card dark:border-emerald-900/70 dark:from-emerald-950/35",
+    icon: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200",
+    value: "text-emerald-950 dark:text-emerald-100",
     accent: "bg-emerald-600",
   },
   warning: {
-    card: "border-amber-200/80 bg-gradient-to-br from-amber-50/80 to-card",
-    icon: "bg-amber-100 text-amber-800",
-    value: "text-amber-950",
+    card: "border-amber-200/80 bg-gradient-to-br from-amber-50/80 to-card dark:border-amber-900/70 dark:from-amber-950/35",
+    icon: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
+    value: "text-amber-950 dark:text-amber-100",
     accent: "bg-amber-500",
   },
   danger: {
-    card: "border-rose-200/80 bg-gradient-to-br from-rose-50/70 to-card",
-    icon: "bg-rose-100 text-rose-800",
-    value: "text-rose-950",
+    card: "border-rose-200/80 bg-gradient-to-br from-rose-50/70 to-card dark:border-rose-900/70 dark:from-rose-950/35",
+    icon: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-200",
+    value: "text-rose-950 dark:text-rose-100",
     accent: "bg-rose-600",
   },
   info: {
-    card: "border-sky-200/70 bg-gradient-to-br from-sky-50/60 to-card",
-    icon: "bg-sky-100 text-sky-800",
-    value: "text-sky-950",
+    card: "border-sky-200/70 bg-gradient-to-br from-sky-50/60 to-card dark:border-sky-900/70 dark:from-sky-950/35",
+    icon: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200",
+    value: "text-sky-950 dark:text-sky-100",
     accent: "bg-sky-600",
   },
   violet: {
-    card: "border-violet-200/70 bg-gradient-to-br from-violet-50/60 to-card",
-    icon: "bg-violet-100 text-violet-800",
-    value: "text-violet-950",
+    card: "border-violet-200/70 bg-gradient-to-br from-violet-50/60 to-card dark:border-violet-900/70 dark:from-violet-950/35",
+    icon: "bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-200",
+    value: "text-violet-950 dark:text-violet-100",
     accent: "bg-violet-600",
   },
 };
@@ -71,7 +71,7 @@ export function StatCard({
   const content = (
     <div
       className={cn(
-        "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5",
+        "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5 card-spotlight",
         style.card,
         href && "hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lift",
       )}
@@ -83,7 +83,7 @@ export function StatCard({
       {href ? (
         <span
           aria-hidden
-          className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/45 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/45 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100 dark:bg-white/10"
         />
       ) : null}
       <div className="flex items-start justify-between gap-3">
@@ -117,7 +117,7 @@ export function StatCard({
           <span />
         )}
         {badge ? (
-          <span className="rounded-full border border-border/70 bg-white/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+          <span className="rounded-full border border-border/70 bg-background/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
             {badge}
           </span>
         ) : href ? (

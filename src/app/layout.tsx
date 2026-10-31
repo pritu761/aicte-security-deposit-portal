@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Toaster } from "sonner";
+
+import { AppToaster } from "@/components/app-toaster";
+import { SiteBackdrop } from "@/components/site-backdrop";
 
 import "@fontsource-variable/inter";
 import "@fontsource-variable/source-serif-4";
@@ -19,33 +21,36 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b2b47",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8f5ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#071e33" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
+
+const themeScript = `(function(){var stored;try{stored=localStorage.getItem("fdr-setu-theme")}catch(e){}var dark=stored?stored==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;var root=document.documentElement;root.classList.toggle("dark",dark);root.style.colorScheme=dark?"dark":"light";})();`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-dvh font-sans">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
-        >
-          Skip to main content
-        </a>
-        {children}
-        <Toaster
-          position="top-right"
-          richColors
-          closeButton
-          toastOptions={{
-            duration: 5000,
-            style: { fontFamily: "inherit" },
-          }}
-        />
+        <SiteBackdrop />
+        <div className="relative z-10">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+          >
+            Skip to main content
+          </a>
+          {children}
+        </div>
+        <AppToaster />
       </body>
     </html>
   );

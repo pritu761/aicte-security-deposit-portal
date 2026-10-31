@@ -526,7 +526,7 @@ export function ReleasesClient({
                       value={notes}
                       onChange={(event) => setNotes(event.target.value)}
                       placeholder="Documents verified. Bank confirmation matches the instrument. Eligible for release."
-                      className="min-h-[86px] bg-white text-[11px]"
+                      className="min-h-[86px] bg-card text-[11px]"
                     />
                     {actionError ? (
                       <p role="alert" className="text-[10.5px] font-medium text-destructive">
@@ -579,7 +579,7 @@ export function ReleasesClient({
                       value={notes}
                       onChange={(event) => setNotes(event.target.value)}
                       placeholder="Approved for release. Discharge voucher to be recorded against the instrument."
-                      className="min-h-[86px] bg-white text-[11px]"
+                      className="min-h-[86px] bg-card text-[11px]"
                     />
                     {actionError ? (
                       <p role="alert" className="text-[10.5px] font-medium text-destructive">

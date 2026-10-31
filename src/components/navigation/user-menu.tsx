@@ -64,6 +64,7 @@ function SignOutButton() {
 export function UserMenu({ user }: { user: SessionUser }) {
   const quickLink = roleLink(user.role);
   const QuickIcon = quickLink?.icon;
+  const userInitials = initials(user.name);
 
   return (
     <DropdownMenu>
@@ -72,10 +73,13 @@ export function UserMenu({ user }: { user: SessionUser }) {
           type="button"
           variant="ghost"
           className="h-10 gap-2 rounded-full border border-transparent pl-1 pr-2 hover:border-border hover:bg-muted/60 sm:pr-2.5"
-          aria-label={`Account menu for ${user.name}`}
+          aria-label={`Account menu for ${user.name} (${userInitials})`}
         >
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-navy-900 text-[11px] font-semibold text-white">
-            {initials(user.name)}
+          <span
+            className="relative flex h-8 w-8 items-center justify-center rounded-full bg-navy-900 text-[11px] font-semibold text-white"
+            aria-hidden
+          >
+            {userInitials}
             <span
               className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-card bg-emerald-500"
               aria-hidden
@@ -97,7 +101,7 @@ export function UserMenu({ user }: { user: SessionUser }) {
         <div className="rounded-t-lg bg-navy-950 px-4 pb-4 pt-4 text-white">
           <div className="flex items-start gap-3">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-sm font-semibold text-white">
-              {initials(user.name)}
+              {userInitials}
             </span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-semibold leading-tight">{user.name}</p>

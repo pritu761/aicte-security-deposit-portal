@@ -99,6 +99,7 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 2px rgba(10, 37, 64, 0.04), 0 8px 24px -16px rgba(10, 37, 64, 0.18)",
         lift: "0 12px 40px -20px rgba(10, 37, 64, 0.35)",
+        glow: "0 0 0 1px rgba(217, 131, 42, 0.18), 0 18px 48px -24px rgba(217, 131, 42, 0.45)",
         sidebar: "inset -1px 0 0 rgba(255,255,255,0.06)",
       },
       keyframes: {
@@ -148,6 +149,10 @@ const config: Config = {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "flag-wave": {
+          "0%, 100%": { transform: "rotate(-1.5deg) skewY(-0.8deg)" },
+          "50%": { transform: "rotate(1.5deg) skewY(0.8deg)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.35s ease-out both",
@@ -162,6 +167,7 @@ const config: Config = {
         "spin-slow": "spin-slow 52s linear infinite",
         shimmer: "shimmer 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "gradient-pan": "gradient-pan 10s ease-in-out infinite",
+        "flag-wave": "flag-wave 1.8s ease-in-out infinite",
       },
       backgroundImage: {
         "grid-navy":

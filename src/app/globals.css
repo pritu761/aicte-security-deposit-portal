@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --background: 40 30% 97%;
     --foreground: 214 42% 12%;
     --card: 0 0% 100%;
@@ -24,6 +25,45 @@
     --input: 214 18% 84%;
     --ring: 199 68% 36%;
     --radius: 0.6rem;
+    --chart-grid: #e8edf3;
+    --chart-axis: #64748b;
+    --chart-axis-strong: #334155;
+    --chart-tooltip-bg: #ffffff;
+    --chart-tooltip-border: #e2e8f0;
+    --chart-tooltip-fg: #0b2b47;
+    --chart-pie-stroke: #ffffff;
+    --chart-cursor: rgba(11, 43, 71, 0.04);
+  }
+
+  .dark {
+    color-scheme: dark;
+    --background: 213 40% 7%;
+    --foreground: 39 28% 94%;
+    --card: 213 35% 10%;
+    --card-foreground: 39 28% 94%;
+    --popover: 213 35% 10%;
+    --popover-foreground: 39 28% 94%;
+    --primary: 38 78% 58%;
+    --primary-foreground: 213 45% 9%;
+    --secondary: 213 28% 16%;
+    --secondary-foreground: 39 24% 90%;
+    --muted: 213 25% 15%;
+    --muted-foreground: 213 15% 70%;
+    --accent: 197 28% 17%;
+    --accent-foreground: 190 35% 88%;
+    --destructive: 350 68% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 213 22% 21%;
+    --input: 213 22% 24%;
+    --ring: 38 78% 58%;
+    --chart-grid: rgba(148, 163, 184, 0.16);
+    --chart-axis: #94a3b8;
+    --chart-axis-strong: #cbd5e1;
+    --chart-tooltip-bg: #0f2134;
+    --chart-tooltip-border: #253c54;
+    --chart-tooltip-fg: #f4f7fb;
+    --chart-pie-stroke: #0f2134;
+    --chart-cursor: rgba(255, 255, 255, 0.05);
   }
 
   * {
@@ -41,6 +81,12 @@
       radial-gradient(1100px 500px at 85% -10%, rgba(217, 131, 42, 0.055), transparent 60%),
       radial-gradient(900px 460px at 8% -8%, rgba(11, 43, 71, 0.06), transparent 60%);
     background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(1100px 500px at 85% -10%, rgba(217, 131, 42, 0.09), transparent 60%),
+      radial-gradient(900px 460px at 8% -8%, rgba(41, 159, 153, 0.07), transparent 60%);
   }
 
   ::selection {
@@ -62,6 +108,10 @@
     scrollbar-color: rgba(11, 43, 71, 0.25) transparent;
   }
 
+  .dark * {
+    scrollbar-color: rgba(226, 232, 240, 0.22) transparent;
+  }
+
   *::-webkit-scrollbar {
     width: 9px;
     height: 9px;
@@ -71,6 +121,11 @@
     background: rgba(11, 43, 71, 0.22);
     border-radius: 999px;
     border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    background: rgba(226, 232, 240, 0.22);
     background-clip: content-box;
   }
 }
@@ -90,6 +145,12 @@
       linear-gradient(rgba(11, 43, 71, 0.045) 1px, transparent 1px),
       linear-gradient(90deg, rgba(11, 43, 71, 0.045) 1px, transparent 1px);
     background-size: 22px 22px;
+  }
+
+  .dark .paper-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   }
 
   .navy-grid {
@@ -267,12 +328,277 @@
 }
 
 @layer utilities {
+  .card-spotlight {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 360ms ease;
+    background: radial-gradient(
+      420px circle at 50% 50%,
+      rgba(255, 255, 255, 0.09),
+      transparent 62%
+    );
+  }
+
+  .dark .card-spotlight::after {
+    background: radial-gradient(
+      420px circle at 50% 50%,
+      rgba(255, 255, 255, 0.055),
+      transparent 62%
+    );
+  }
+
+  .card-spotlight:hover::after {
+    opacity: 1;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
 
   .text-pretty {
     text-wrap: pretty;
+  }
+
+  /* Legacy navy and status utilities are used across server-rendered pages.
+     These overrides keep them legible after the colour scheme flips. */
+  .dark .text-navy-700,
+  .dark .text-navy-800,
+  .dark .text-navy-900,
+  .dark .text-navy-950 {
+    color: hsl(var(--foreground));
+  }
+
+  .dark .bg-navy-50 {
+    background-color: rgba(255, 255, 255, 0.055);
+  }
+
+  .dark .bg-navy-100 {
+    background-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .dark .border-navy-100,
+  .dark .border-navy-200 {
+    border-color: hsl(var(--border));
+  }
+
+  .dark [class~="bg-emerald-50"],
+  .dark [class*="bg-emerald-50/"],
+  .dark .bg-emerald-100 {
+    background-color: rgba(16, 185, 129, 0.13);
+  }
+
+  .dark .text-emerald-600,
+  .dark .text-emerald-700,
+  .dark .text-emerald-800,
+  .dark .text-emerald-900,
+  .dark .text-emerald-950,
+  .dark [class*="text-emerald-800/"],
+  .dark [class*="text-emerald-900/"] {
+    color: #86efac;
+  }
+
+  .dark [class*="border-emerald-200"] {
+    border-color: rgba(74, 222, 128, 0.28);
+  }
+
+  .dark [class~="bg-amber-50"],
+  .dark [class*="bg-amber-50/"],
+  .dark .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.14);
+  }
+
+  .dark .text-amber-600,
+  .dark .text-amber-700,
+  .dark .text-amber-800,
+  .dark .text-amber-900,
+  .dark .text-amber-950 {
+    color: #fcd34d;
+  }
+
+  .dark [class*="border-amber-200"] {
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  .dark [class~="bg-rose-50"],
+  .dark [class*="bg-rose-50/"],
+  .dark .bg-rose-100 {
+    background-color: rgba(244, 63, 94, 0.13);
+  }
+
+  .dark .text-rose-600,
+  .dark .text-rose-700,
+  .dark .text-rose-800,
+  .dark .text-rose-900,
+  .dark .text-rose-950,
+  .dark [class*="text-rose-950/"],
+  .dark [class*="text-rose-900/"] {
+    color: #fda4af;
+  }
+
+  .dark [class*="border-rose-200"] {
+    border-color: rgba(251, 113, 133, 0.3);
+  }
+
+  .dark [class~="bg-sky-50"],
+  .dark [class*="bg-sky-50/"],
+  .dark .bg-sky-100 {
+    background-color: rgba(14, 165, 233, 0.13);
+  }
+
+  .dark .text-sky-800,
+  .dark .text-sky-900,
+  .dark .text-sky-950 {
+    color: #7dd3fc;
+  }
+
+  .dark [class*="border-sky-200"] {
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+
+  .dark [class~="bg-violet-50"],
+  .dark [class*="bg-violet-50/"],
+  .dark .bg-violet-100 {
+    background-color: rgba(139, 92, 246, 0.14);
+  }
+
+  .dark .text-violet-800,
+  .dark .text-violet-900,
+  .dark .text-violet-950 {
+    color: #c4b5fd;
+  }
+
+  .dark [class*="border-violet-200"] {
+    border-color: rgba(167, 139, 250, 0.3);
+  }
+
+  .dark [class~="bg-slate-50"],
+  .dark [class*="bg-slate-50/"],
+  .dark [class~="bg-slate-100"] {
+    background-color: rgba(148, 163, 184, 0.1);
+  }
+
+  .dark .text-slate-400,
+  .dark .text-slate-500 {
+    color: #94a3b8;
+  }
+
+  .dark .text-slate-600,
+  .dark .text-slate-700,
+  .dark .text-slate-800 {
+    color: #cbd5e1;
+  }
+
+  .dark [class*="border-slate-200"] {
+    border-color: hsl(var(--border));
+  }
+
+  .dark [class~="bg-red-50"] {
+    background-color: rgba(239, 68, 68, 0.13);
+  }
+
+  .dark .text-red-800,
+  .dark .text-red-900 {
+    color: #fca5a5;
+  }
+
+  .dark [class*="border-red-200"] {
+    border-color: rgba(248, 113, 113, 0.3);
+  }
+
+  .dark [class~="bg-teal-50"],
+  .dark [class*="bg-teal-50/"],
+  .dark .bg-teal-100 {
+    background-color: rgba(41, 159, 153, 0.14);
+  }
+
+  .dark .text-teal-600,
+  .dark .text-teal-700,
+  .dark .text-teal-800,
+  .dark .text-teal-900,
+  .dark [class*="text-teal-800/"],
+  .dark [class*="text-teal-900/"] {
+    color: #5eead4;
+  }
+
+  .dark [class*="border-teal-200"] {
+    border-color: rgba(45, 212, 191, 0.3);
+  }
+
+  .dark [class~="bg-saffron-50"],
+  .dark [class*="bg-saffron-50/"] {
+    background-color: rgba(217, 131, 42, 0.14);
+  }
+
+  .dark .text-saffron-600,
+  .dark .text-saffron-700,
+  .dark .text-saffron-800,
+  .dark .text-saffron-900 {
+    color: #f3c47c;
+  }
+
+  .dark [class*="border-saffron-200"] {
+    border-color: rgba(227, 160, 67, 0.3);
+  }
+
+  .dark [class~="bg-navy-50"],
+  .dark [class*="bg-navy-50/"] {
+    background-color: rgba(255, 255, 255, 0.055);
+  }
+
+  .dark [class*="border-navy-200"] {
+    border-color: hsl(var(--border));
+  }
+}
+
+@media screen {
+  /* The authorisation receipt stays a light, printable document even when the
+     surrounding portal is in dark mode. */
+  .dark #print-receipt {
+    color-scheme: light;
+    color: #0b2b47;
+    background-color: #ffffff;
+  }
+
+  .dark #print-receipt .text-foreground,
+  .dark #print-receipt .text-navy-900 {
+    color: #0b2b47;
+  }
+
+  .dark #print-receipt .text-muted-foreground {
+    color: #52606d;
+  }
+
+  .dark #print-receipt .text-emerald-700 {
+    color: #047857;
+  }
+
+  .dark #print-receipt .text-amber-900 {
+    color: #78350f;
+  }
+
+  .dark #print-receipt .bg-amber-50 {
+    background-color: #fffbeb;
+  }
+
+  .dark #print-receipt .border-amber-300 {
+    border-color: #fcd34d;
+  }
+
+  .dark #print-receipt .border-border,
+  .dark #print-receipt .border-border\/50 {
+    border-color: #e2e8f0;
+  }
+
+  .dark #print-receipt .border-foreground\/40 {
+    border-color: rgba(11, 43, 71, 0.4);
   }
 }
 

@@ -97,7 +97,7 @@ export const VERIFICATION_STYLES: Record<
   { badge: string; icon: "building" | "bank" | "alert" }
 > = {
   INSTITUTION_SUBMITTED: {
-    badge: "border-slate-200 bg-white text-slate-600",
+    badge: "border-slate-200 bg-card text-slate-600",
     icon: "building",
   },
   BANK_CONFIRMED: {

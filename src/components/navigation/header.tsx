@@ -4,9 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, ChevronRight, Menu } from "lucide-react";
 
+import { IndiaFlag } from "@/components/india-flag";
 import { CommandPalette } from "@/components/navigation/command-palette";
 import { ScrollProgress } from "@/components/navigation/scroll-progress";
 import { UserMenu } from "@/components/navigation/user-menu";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -61,9 +63,12 @@ export function Header({
   return (
     <header className="sticky top-0 z-30">
       <div className="flex h-7 items-center justify-between gap-4 bg-navy-950 px-4 text-[10px] tracking-wide text-white/60 sm:px-6 lg:px-8">
-        <p className="truncate">
-          All India Council for Technical Education
-          <span className="hidden sm:inline"> · Regulation Bureau</span>
+        <p className="flex min-w-0 items-center gap-2">
+          <IndiaFlag className="h-3 w-[18px]" />
+          <span className="truncate">
+            All India Council for Technical Education
+            <span className="hidden sm:inline"> · Regulation Bureau</span>
+          </span>
         </p>
         <p className="hidden shrink-0 items-center gap-1.5 sm:flex">
           <span
@@ -72,7 +77,7 @@ export function Header({
           />
           Secure session
           <span className="hidden text-white/30 md:inline">·</span>
-          <span className="hidden text-white/45 md:inline">Role-scoped access</span>
+          <span className="hidden text-white/55 md:inline">Role-scoped access</span>
         </p>
       </div>
 
@@ -117,6 +122,8 @@ export function Header({
           </nav>
 
           <CommandPalette role={user.role} />
+
+          <ThemeToggle />
 
           <div className="h-6 w-px bg-border/70" aria-hidden />
 

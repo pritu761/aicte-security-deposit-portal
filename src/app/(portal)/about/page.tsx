@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -21,6 +22,7 @@ import {
   Workflow,
 } from "lucide-react";
 
+import { IndiaFlag } from "@/components/india-flag";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -218,6 +220,78 @@ export default function AboutPage() {
               Secure portal · Role-scoped by design
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        className="grid gap-4 lg:grid-cols-[1.22fr_0.78fr]"
+        aria-labelledby="institutional-seat-heading"
+      >
+        <figure className="group relative min-h-[320px] overflow-hidden rounded-2xl border border-border/80 bg-navy-950 shadow-lift sm:min-h-[360px]">
+          <Image
+            src="/images/aicte-hq.webp"
+            alt="AICTE headquarters in New Delhi with the Indian national flag flying outside the building."
+            fill
+            sizes="(min-width: 1024px) 62vw, 100vw"
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/30 to-transparent"
+            aria-hidden
+          />
+          <figcaption className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-3 p-5 text-white sm:p-6">
+            <div>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-saffron-200/90">
+                Institutional seat
+              </p>
+              <p className="font-display mt-1 text-lg font-semibold leading-tight">
+                AICTE headquarters · New Delhi
+              </p>
+              <p className="mt-1 max-w-md text-[10.5px] leading-relaxed text-white/60">
+                The Regulation Bureau administers the portal from the Council&apos;s national
+                headquarters.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[9px] font-medium text-white/85 backdrop-blur-sm">
+              <IndiaFlag className="h-3 w-[18px]" />
+              Government of India
+            </span>
+          </figcaption>
+        </figure>
+
+        <div className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-card">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-saffron-200 bg-saffron-50 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-saffron-800">
+              <IndiaFlag className="h-3 w-[18px]" />
+              National regulator
+            </span>
+            <h2
+              id="institutional-seat-heading"
+              className="font-display mt-4 text-xl font-semibold leading-tight text-navy-900 sm:text-2xl"
+            >
+              Public accountability, built into the workflow.
+            </h2>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Every institution, instrument and decision is held to the same register. Evidence,
+              authority and chronology stay together so the Council can account for each deposit
+              from receipt to release.
+            </p>
+          </div>
+          <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border/70 pt-4">
+            {[
+              { label: "Scope", value: "All India" },
+              { label: "Oversight", value: "Ministry of Education" },
+              { label: "Access", value: "Role-scoped" },
+              { label: "Evidence", value: "Bank-verified" },
+            ].map((item) => (
+              <div key={item.label}>
+                <dt className="text-[9px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  {item.label}
+                </dt>
+                <dd className="mt-1 text-[11.5px] font-semibold text-navy-900">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
