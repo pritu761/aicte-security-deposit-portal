@@ -136,7 +136,10 @@ export default async function DashboardPage() {
         }
       />
 
-      <section aria-label="Portfolio summary" className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <section
+        aria-label="Portfolio summary"
+        className="stagger-cards grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5"
+      >
         <StatCard
           label="Total deposit value"
           value={`₹${totalCrore} Cr`}
@@ -204,7 +207,10 @@ export default async function DashboardPage() {
         />
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-3" aria-label="Portfolio analytics">
+      <section
+        className="scroll-reveal grid gap-4 xl:grid-cols-3"
+        aria-label="Portfolio analytics"
+      >
         <Card className="xl:col-span-2">
           <CardHeader className="flex-row items-start justify-between space-y-0 pb-2">
             <div>
@@ -239,7 +245,10 @@ export default async function DashboardPage() {
         </Card>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-3" aria-label="Maturity and action centre">
+      <section
+        className="scroll-reveal grid gap-4 xl:grid-cols-3"
+        aria-label="Maturity and action centre"
+      >
         <Card className="xl:col-span-2">
           <CardHeader className="flex-row items-start justify-between space-y-0 pb-2">
             <div>
@@ -329,7 +338,7 @@ export default async function DashboardPage() {
                   },
                   { key: "APPROVED_RELEASED", label: "Authorised", color: "bg-emerald-600" },
                   { key: "REJECTED", label: "Rejected", color: "bg-rose-500" },
-                ].map((row) => {
+                ].map((row, index) => {
                   const count = data.releasePipeline[row.key as keyof typeof data.releasePipeline];
                   const pct = pipelineTotal ? Math.round((count / pipelineTotal) * 100) : 0;
                   return (
@@ -339,8 +348,11 @@ export default async function DashboardPage() {
                       </span>
                       <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-border/70">
                         <span
-                          className={`block h-full rounded-full ${row.color}`}
-                          style={{ width: `${Math.max(pct, count ? 4 : 0)}%` }}
+                          className={`block h-full origin-left animate-grow-x rounded-full ${row.color}`}
+                          style={{
+                            width: `${Math.max(pct, count ? 4 : 0)}%`,
+                            animationDelay: `${160 + index * 70}ms`,
+                          }}
                         />
                       </span>
                       <span className="w-4 text-right text-[10px] font-semibold tabular-nums">
@@ -355,7 +367,10 @@ export default async function DashboardPage() {
         </Card>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-3" aria-label="Upcoming maturities and activity">
+      <section
+        className="scroll-reveal grid gap-4 xl:grid-cols-3"
+        aria-label="Upcoming maturities and activity"
+      >
         <Card className="xl:col-span-2">
           <CardHeader className="flex-row items-start justify-between space-y-0 pb-2">
             <div>
@@ -567,7 +582,7 @@ export default async function DashboardPage() {
       </section>
 
       {bureau ? (
-        <Card>
+        <Card className="scroll-reveal">
           <CardHeader className="flex-row items-start justify-between space-y-0 pb-2">
             <div>
               <CardTitle>Institutions requiring attention</CardTitle>
@@ -646,7 +661,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card>
+        <Card className="scroll-reveal">
           <CardHeader className="pb-3">
             <CardTitle>Verification health</CardTitle>
             <CardDescription>

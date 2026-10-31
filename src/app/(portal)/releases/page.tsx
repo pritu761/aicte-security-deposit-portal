@@ -62,7 +62,10 @@ export default async function ReleasesPage() {
         {roleGuidance}
       </Alert>
 
-      <section aria-label="Release summary" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section
+        aria-label="Release summary"
+        className="stagger-cards grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <StatCard
           label="Pending scrutiny"
           value={data.summary.PENDING_SCRUTINY}

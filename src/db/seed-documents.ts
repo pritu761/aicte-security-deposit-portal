@@ -81,7 +81,7 @@ async function baseDocument(title: string, subject: string): Promise<{ pdf: PDFD
   pdf.setTitle(title);
   pdf.setSubject(subject);
   pdf.setAuthor("AICTE Regulation Bureau");
-  pdf.setCreator("AICTE Suraksha — Security Deposit & FDR Management Portal");
+  pdf.setCreator("FDR Setu — Security Deposit & FDR Management Portal");
   const page = pdf.addPage([595.28, 841.89]);
   const fonts: Fonts = {
     regular: await pdf.embedFont(StandardFonts.Helvetica),
@@ -93,7 +93,7 @@ async function baseDocument(title: string, subject: string): Promise<{ pdf: PDFD
 }
 
 function watermark(page: PDFPage, fonts: Fonts) {
-  page.drawText("AICTE SURAKSHA — DIGITAL CUSTODY COPY", {
+  page.drawText("FDR SETU — DIGITAL CUSTODY COPY", {
     x: 52,
     y: 330,
     size: 20,

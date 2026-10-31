@@ -139,7 +139,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About the portal · Regulation Bureau"
         title="One register for every security deposit."
-        description="AICTE Suraksha connects institutions, scrutiny officers and the Regulation Bureau in a single controlled workflow — from the first bank-issued instrument to the final release authorisation."
+        description="FDR Setu connects institutions, scrutiny officers and the Regulation Bureau in a single controlled workflow — from the first bank-issued instrument to the final release authorisation."
         actions={
           <>
             <Button asChild variant="outline" size="sm">

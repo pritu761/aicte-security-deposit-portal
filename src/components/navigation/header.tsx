@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Bell, ChevronRight, Menu } from "lucide-react";
 
 import { CommandPalette } from "@/components/navigation/command-palette";
+import { ScrollProgress } from "@/components/navigation/scroll-progress";
 import { UserMenu } from "@/components/navigation/user-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -65,14 +66,17 @@ export function Header({
           <span className="hidden sm:inline"> · Regulation Bureau</span>
         </p>
         <p className="hidden shrink-0 items-center gap-1.5 sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
+          <span
+            className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-400"
+            aria-hidden
+          />
           Secure session
           <span className="hidden text-white/30 md:inline">·</span>
           <span className="hidden text-white/45 md:inline">Role-scoped access</span>
         </p>
       </div>
 
-      <div className="border-b border-border/80 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85">
+      <div className="relative border-b border-border/80 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85">
         <div className="flex h-[62px] items-center gap-2 px-4 sm:gap-3 sm:px-6 lg:px-8">
           <Button
             type="button"
@@ -86,7 +90,10 @@ export function Header({
           </Button>
 
           <nav aria-label="Breadcrumb" className="min-w-0 flex-1">
-            <ol className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <ol
+              key={pathname}
+              className="flex animate-fade-in items-center gap-1.5 text-xs text-muted-foreground"
+            >
               <li className="hidden sm:block">
                 <Link href="/dashboard" className="transition-colors hover:text-foreground">
                   AICTE
@@ -124,8 +131,14 @@ export function Header({
               >
                 <Bell className="h-[18px] w-[18px]" />
                 {notifications.length ? (
-                  <span className="absolute right-1 top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-saffron-500 px-0.5 text-[8px] font-bold leading-none text-white">
-                    {notifications.length > 9 ? "9+" : notifications.length}
+                  <span className="pointer-events-none absolute right-1 top-1 flex h-3.5 min-w-3.5 items-center justify-center">
+                    <span
+                      aria-hidden
+                      className="absolute inline-flex h-full w-full animate-ping rounded-full bg-saffron-400/50 [animation-duration:2.6s]"
+                    />
+                    <span className="relative flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-saffron-500 px-0.5 text-[8px] font-bold leading-none text-white">
+                      {notifications.length > 9 ? "9+" : notifications.length}
+                    </span>
                   </span>
                 ) : null}
               </Button>
@@ -198,10 +211,7 @@ export function Header({
             workspace.
           </span>
         </div>
-        <div
-          className="h-px bg-gradient-to-r from-transparent via-saffron-300/50 to-transparent"
-          aria-hidden
-        />
+        <ScrollProgress />
       </div>
     </header>
   );

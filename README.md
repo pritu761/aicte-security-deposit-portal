@@ -1,8 +1,8 @@
-# AICTE Suraksha
+# FDR Setu
 
 **Security Deposit & FDR Management Portal** — a full-stack portal for the All India Council for Technical Education (AICTE) Regulation Bureau.
 
-AICTE Suraksha replaces spreadsheet-based tracking of institutional security deposits with a single register for FDR instruments, bank verification, renewal succession, release authorisation, and an immutable audit trail. Access requires an authenticated account, and every action is scoped by role and institution.
+FDR Setu replaces spreadsheet-based tracking of institutional security deposits with a single register for FDR instruments, bank verification, renewal succession, release authorisation, and an immutable audit trail. Access requires an authenticated account, and every action is scoped by role and institution.
 
 ![Executive dashboard](docs/screenshots/dashboard-head.png)
 
@@ -17,7 +17,7 @@ AICTE Suraksha replaces spreadsheet-based tracking of institutional security dep
 - AES-256-GCM encrypted document vault with authenticated streaming
 - Append-only audit log enforced by a PostgreSQL trigger
 - Recharts analytics, CSV/JSON exports, printable release authorisation receipts
-- **34 Vitest unit tests**, clean `tsc --noEmit`, production build verified
+- **38 Vitest unit tests**, clean `tsc --noEmit`, production build verified
 
 ## Sign in
 

@@ -123,7 +123,10 @@ export default async function ScrutinyDetailPage({
         }
       />
 
-      <section aria-label="Instrument summary" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section
+        aria-label="Instrument summary"
+        className="stagger-cards grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <StatCard
           label="Deposit amount"
           value={formatINR(fdr.depositAmount)}

@@ -1,6 +1,6 @@
 import type { FdrStatus, ReleaseStatus, UserRole, VerificationStatus, DocumentType } from "@/db/schema";
 
-export const APP_NAME = "AICTE Suraksha";
+export const APP_NAME = "FDR Setu";
 export const APP_SUBTITLE = "Security Deposit & FDR Management Portal";
 export const ORGANISATION = "All India Council for Technical Education";
 export const REGULATION_BUREAU = "Regulation Bureau, Ministry of Education, Government of India";

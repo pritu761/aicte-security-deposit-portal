@@ -85,7 +85,13 @@ export function BankDistributionChart({ data }: { data: BankDatum[] }) {
             contentStyle={tooltipStyle}
             formatter={(value) => [`₹${Number(value).toFixed(2)} Cr`, "Deposit value"]}
           />
-          <Bar dataKey="valueCr" radius={[0, 5, 5, 0]} barSize={16}>
+          <Bar
+            dataKey="valueCr"
+            radius={[0, 5, 5, 0]}
+            barSize={16}
+            animationDuration={900}
+            animationEasing="ease-out"
+          >
             {rows.map((entry, index) => (
               <Cell key={entry.bank} fill={palette[index % palette.length]} />
             ))}
@@ -139,6 +145,8 @@ export function MaturityTimelineChart({ data }: { data: TimelineDatum[] }) {
             strokeWidth={2.2}
             fill="url(#maturityFill)"
             activeDot={{ r: 4, strokeWidth: 2, fill: "#fff", stroke: "#1e807d" }}
+            animationDuration={1000}
+            animationEasing="ease-out"
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -176,6 +184,8 @@ export function StatusDonutChart({ data }: { data: StatusDatum[] }) {
               paddingAngle={2}
               stroke="#fff"
               strokeWidth={2}
+              animationDuration={900}
+              animationEasing="ease-out"
             >
               {rows.map((entry) => (
                 <Cell key={entry.key} fill={entry.color} />

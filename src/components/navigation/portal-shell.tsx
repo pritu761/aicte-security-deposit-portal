@@ -30,8 +30,13 @@ export function PortalShell({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setNavOpen(false);
     };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [navOpen]);
 
   return (
@@ -44,8 +49,9 @@ export function PortalShell({
           onOpenNav={() => setNavOpen(true)}
         />
         <main
+          key={pathname}
           id="main-content"
-          className="mx-auto w-full max-w-[1500px] flex-1 animate-fade-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+          className="mx-auto w-full max-w-[1500px] flex-1 animate-page-in px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
         >
           {children}
         </main>
@@ -77,7 +83,10 @@ export function PortalShell({
             </nav>
           </div>
           <p className="mt-2 flex items-center gap-1.5 text-[9.5px] text-muted-foreground/75">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+            <span
+              className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500"
+              aria-hidden
+            />
             Secure workspace · Session protected · Every action recorded
           </p>
         </footer>

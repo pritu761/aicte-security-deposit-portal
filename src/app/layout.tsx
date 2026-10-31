@@ -7,12 +7,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "AICTE Suraksha · Security Deposit & FDR Portal",
-    template: "%s · AICTE Suraksha",
+    default: "FDR Setu · Security Deposit & FDR Portal",
+    template: "%s · FDR Setu",
   },
   description:
     "A digital workspace for the AICTE Regulation Bureau to manage security deposits, FDR verification, renewals and release authorisations.",
-  applicationName: "AICTE Suraksha",
+  applicationName: "FDR Setu",
   authors: [{ name: "AICTE Regulation Bureau" }],
   robots: { index: false, follow: false },
   icons: { icon: "/icon.svg" },

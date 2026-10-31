@@ -1,5 +1,5 @@
 /**
- * Deterministic register seed for the AICTE Security Deposit & FDR portal.
+ * Deterministic register seed for FDR Setu, the AICTE Security Deposit & FDR portal.
  *
  * Run: npm run db:setup   (schema first, on a fresh database)
  *      npm run db:seed

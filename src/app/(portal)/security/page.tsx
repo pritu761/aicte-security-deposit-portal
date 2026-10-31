@@ -236,7 +236,7 @@ export default function SecurityPage() {
       <PageHeader
         eyebrow="Security & assurance · Controls & posture"
         title="Built for accountable public-finance workflows."
-        description="AICTE Suraksha applies least privilege, encrypted evidence, immutable audit history and server-side validation to every deposit record."
+        description="FDR Setu applies least privilege, encrypted evidence, immutable audit history and server-side validation to every deposit record."
         actions={
           <>
             <Button asChild variant="outline" size="sm">

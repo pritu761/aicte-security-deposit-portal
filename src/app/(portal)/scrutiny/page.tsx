@@ -119,7 +119,7 @@ export default async function ScrutinyQueuePage() {
 
       <section
         aria-label="Scrutiny summary"
-        className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5"
+        className="stagger-cards grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5"
       >
         <StatCard
           label="Awaiting verification"

@@ -1,8 +1,8 @@
 {
-  "name": "aicte-security-deposit-portal",
+  "name": "fdr-setu",
   "version": "1.0.0",
   "private": true,
-  "description": "AICTE Security Deposit & FDR Management Portal — Regulation Bureau",
+  "description": "FDR Setu — AICTE Security Deposit & FDR Management Portal, Regulation Bureau",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

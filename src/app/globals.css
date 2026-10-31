@@ -116,8 +116,153 @@
     @apply underline decoration-border decoration-1 underline-offset-4 transition-colors hover:decoration-primary;
   }
 
+  .text-gradient-gold {
+    background-image: linear-gradient(
+      100deg,
+      #f9ecd0 0%,
+      #e3a043 38%,
+      #f2d69d 62%,
+      #d9832a 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .stagger-cards > * {
+    animation: stagger-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .stagger-cards > *:nth-child(1) {
+    animation-delay: 40ms;
+  }
+  .stagger-cards > *:nth-child(2) {
+    animation-delay: 90ms;
+  }
+  .stagger-cards > *:nth-child(3) {
+    animation-delay: 140ms;
+  }
+  .stagger-cards > *:nth-child(4) {
+    animation-delay: 190ms;
+  }
+  .stagger-cards > *:nth-child(5) {
+    animation-delay: 240ms;
+  }
+  .stagger-cards > *:nth-child(6) {
+    animation-delay: 290ms;
+  }
+
+  .table-reveal tbody tr {
+    animation: table-row-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition:
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .table-reveal tbody tr:nth-child(1) {
+    animation-delay: 30ms;
+  }
+  .table-reveal tbody tr:nth-child(2) {
+    animation-delay: 65ms;
+  }
+  .table-reveal tbody tr:nth-child(3) {
+    animation-delay: 100ms;
+  }
+  .table-reveal tbody tr:nth-child(4) {
+    animation-delay: 135ms;
+  }
+  .table-reveal tbody tr:nth-child(5) {
+    animation-delay: 170ms;
+  }
+  .table-reveal tbody tr:nth-child(6) {
+    animation-delay: 205ms;
+  }
+  .table-reveal tbody tr:nth-child(7) {
+    animation-delay: 240ms;
+  }
+  .table-reveal tbody tr:nth-child(8) {
+    animation-delay: 275ms;
+  }
+  .table-reveal tbody tr:nth-child(n + 9) {
+    animation-delay: 300ms;
+  }
+
+  .table-reveal tbody tr:hover {
+    box-shadow: inset 3px 0 0 rgba(217, 131, 42, 0.55);
+  }
+
+  .button-sheen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .button-sheen::after {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    z-index: -1;
+    transform: translateX(-135%) rotate(14deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.22),
+      transparent
+    );
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .button-sheen:hover::after {
+    transform: translateX(135%) rotate(14deg);
+  }
+
   .print-only {
     display: none;
+  }
+}
+
+@keyframes stagger-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes table-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.994);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-reveal {
+      animation: scroll-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 72%;
+    }
   }
 }
 
@@ -136,6 +281,7 @@
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;

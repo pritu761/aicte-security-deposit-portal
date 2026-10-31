@@ -71,12 +71,21 @@ export function StatCard({
   const content = (
     <div
       className={cn(
-        "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all sm:p-5",
+        "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5",
         style.card,
-        href && "hover:-translate-y-0.5 hover:shadow-lift",
+        href && "hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lift",
       )}
     >
-      <span aria-hidden className={cn("absolute inset-x-0 top-0 h-[3px]", style.accent)} />
+      <span
+        aria-hidden
+        className={cn("absolute inset-x-0 top-0 h-[3px] origin-left animate-grow-x", style.accent)}
+      />
+      {href ? (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/45 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+        />
+      ) : null}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="data-label flex items-center gap-1.5">
@@ -92,7 +101,12 @@ export function StatCard({
             {value}
           </p>
         </div>
-        <span className={cn("rounded-lg p-2", style.icon)}>
+        <span
+          className={cn(
+            "rounded-lg p-2 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105",
+            style.icon,
+          )}
+        >
           <Icon className="h-[18px] w-[18px]" aria-hidden />
         </span>
       </div>
@@ -107,7 +121,7 @@ export function StatCard({
             {badge}
           </span>
         ) : href ? (
-          <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
+          <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
         ) : null}
       </div>
     </div>

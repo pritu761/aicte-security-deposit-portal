@@ -110,18 +110,58 @@ const config: Config = {
           from: { opacity: "0", transform: "translateX(-8px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        rise: {
+          from: { opacity: "0", transform: "translateY(12px) scale(0.992)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "page-in": {
+          from: { opacity: "0", transform: "translateY(7px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-y": {
+          from: { opacity: "0", transform: "scaleY(0.25)" },
+          to: { opacity: "1", transform: "scaleY(1)" },
+        },
+        "grow-x": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" },
+        },
         "pulse-soft": {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.55" },
         },
+        "float-slow": {
+          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
+          "50%": { transform: "translate3d(0, -18px, 0)" },
+        },
+        "float-slower": {
+          "0%, 100%": { transform: "translate3d(0, 0, 0) scale(1)" },
+          "50%": { transform: "translate3d(14px, 12px, 0) scale(1.03)" },
+        },
+        "spin-slow": {
+          to: { transform: "rotate(360deg)" },
+        },
         shimmer: {
           "100%": { transform: "translateX(100%)" },
+        },
+        "gradient-pan": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
       },
       animation: {
         "fade-in": "fade-in 0.35s ease-out both",
         "slide-in": "slide-in 0.25s ease-out both",
+        rise: "rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "page-in": "page-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "scale-y": "scale-y 0.32s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "grow-x": "grow-x 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
         "pulse-soft": "pulse-soft 2s ease-in-out infinite",
+        "float-slow": "float-slow 16s ease-in-out infinite",
+        "float-slower": "float-slower 24s ease-in-out infinite",
+        "spin-slow": "spin-slow 52s linear infinite",
+        shimmer: "shimmer 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "gradient-pan": "gradient-pan 10s ease-in-out infinite",
       },
       backgroundImage: {
         "grid-navy":

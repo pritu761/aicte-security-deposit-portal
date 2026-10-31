@@ -789,7 +789,7 @@ function AuthorizationReceipt({
           <div className="flex items-start justify-between gap-4 border-b-2 border-navy-900 pb-3">
             <div>
               <p className="font-display text-lg font-semibold leading-tight text-navy-900">
-                AICTE Suraksha
+                FDR Setu
               </p>
               <p className="mt-0.5 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
                 All India Council for Technical Education · Regulation Bureau

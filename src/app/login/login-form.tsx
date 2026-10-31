@@ -55,7 +55,7 @@ function SubmitButton({ buttonRef }: { buttonRef: React.Ref<HTMLButtonElement> }
       id="sign-in-submit"
       type="submit"
       disabled={pending}
-      className="group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-navy-900 px-4 text-sm font-semibold text-white shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-navy-800 hover:shadow-[0_14px_34px_-14px_rgba(11,43,71,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
+      className="button-sheen group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-navy-900 px-4 text-sm font-semibold text-white shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-navy-800 hover:shadow-[0_14px_34px_-14px_rgba(11,43,71,0.9)] active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
     >
       {pending ? (
         <>
@@ -123,16 +123,16 @@ export function LoginForm() {
                 aria-pressed={selected}
                 aria-label={`Fill ${account.label} demo credentials`}
                 className={cn(
-                  "group flex min-w-0 flex-col items-start rounded-lg border px-2 py-2 text-left transition-all",
+                  "group flex min-w-0 flex-col items-start rounded-lg border px-2 py-2 text-left transition-all duration-200",
                   selected
                     ? "border-saffron-400 bg-white shadow-xs"
-                    : "border-border/80 bg-white/75 hover:border-saffron-300 hover:bg-white",
+                    : "border-border/80 bg-white/75 hover:-translate-y-0.5 hover:border-saffron-300 hover:bg-white hover:shadow-xs",
                 )}
               >
                 <span className="flex w-full items-center justify-between gap-1">
                   <Icon
                     className={cn(
-                      "h-3.5 w-3.5",
+                      "h-3.5 w-3.5 transition-transform duration-200 group-hover:scale-110",
                       selected ? "text-saffron-600" : "text-muted-foreground",
                     )}
                     aria-hidden

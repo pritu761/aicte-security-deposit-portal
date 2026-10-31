@@ -17,7 +17,7 @@ import { getCurrentUser } from "@/lib/session";
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Secure access to the AICTE Security Deposit & FDR Management Portal.",
+  description: "Secure access to FDR Setu, the AICTE Security Deposit & FDR Management Portal.",
 };
 
 const custodySteps = [
@@ -47,26 +47,28 @@ export default async function LoginPage() {
       <section className="relative hidden min-h-dvh overflow-hidden bg-navy-950 text-white lg:flex lg:flex-col">
         <div className="navy-grid absolute inset-0 opacity-70" aria-hidden />
         <div
-          className="absolute -left-40 top-14 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(227,160,67,0.2),transparent_68%)]"
+          className="absolute -left-40 top-14 h-[520px] w-[520px] animate-float-slow rounded-full bg-[radial-gradient(circle,rgba(227,160,67,0.2),transparent_68%)]"
           aria-hidden
         />
         <div
-          className="absolute -right-40 bottom-[-160px] h-[620px] w-[620px] rounded-full border border-white/[0.06] bg-[radial-gradient(circle,rgba(41,159,153,0.13),transparent_66%)]"
+          className="absolute -right-40 bottom-[-160px] h-[620px] w-[620px] animate-float-slower rounded-full border border-white/[0.06] bg-[radial-gradient(circle,rgba(41,159,153,0.13),transparent_66%)]"
           aria-hidden
         />
         <div
-          className="absolute right-[14%] top-[13%] h-64 w-64 rounded-full border border-saffron-300/15"
+          className="absolute right-[14%] top-[13%] h-64 w-64 animate-spin-slow rounded-full border border-saffron-300/15 [animation-duration:64s]"
           aria-hidden
         >
           <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-saffron-300/80" />
         </div>
         <div
-          className="absolute right-[10%] top-[9%] h-[22rem] w-[22rem] rounded-full border border-white/[0.05]"
+          className="absolute right-[10%] top-[9%] h-[22rem] w-[22rem] animate-spin-slow rounded-full border border-white/[0.05] [animation-direction:reverse] [animation-duration:76s]"
           aria-hidden
-        />
+        >
+          <span className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 translate-y-1/2 rounded-full bg-teal-300/60" />
+        </div>
 
         <div className="relative z-10 flex flex-1 flex-col px-10 py-9 xl:px-14 xl:py-12">
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex animate-fade-in items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-saffron-200/30 bg-white/[0.07] text-saffron-200 shadow-lg shadow-black/10">
                 <ShieldCheck className="h-6 w-6" aria-hidden />
@@ -87,21 +89,21 @@ export default async function LoginPage() {
           </div>
 
           <div className="my-auto max-w-[575px] py-14">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-saffron-300/20 bg-saffron-300/[0.08] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-saffron-200">
+            <span className="inline-flex animate-rise items-center gap-1.5 rounded-full border border-saffron-300/20 bg-saffron-300/[0.08] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-saffron-200 [animation-delay:80ms]">
               <Sparkles className="h-3 w-3" aria-hidden />
               Regulation Bureau
             </span>
-            <h1 className="font-display mt-5 text-[2.7rem] font-semibold leading-[1.05] tracking-[-0.025em] text-white text-balance xl:text-[3.25rem]">
+            <h1 className="font-display mt-5 animate-rise text-[2.7rem] font-semibold leading-[1.05] tracking-[-0.025em] text-white text-balance [animation-delay:140ms] xl:text-[3.25rem]">
               Every deposit.
               <br />
-              <span className="text-saffron-200">Accounted for.</span>
+              <span className="text-gradient-gold animate-gradient-pan">Accounted for.</span>
             </h1>
-            <p className="mt-5 max-w-[475px] text-[13.5px] leading-relaxed text-white/60">
+            <p className="mt-5 max-w-[475px] animate-rise text-[13.5px] leading-relaxed text-white/60 [animation-delay:220ms]">
               A single, auditable workspace for institutional security deposits — from FDR
               submission and bank verification through renewal to final release.
             </p>
 
-            <div className="mt-9 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.055] shadow-2xl shadow-black/20 backdrop-blur-sm">
+            <div className="mt-9 animate-rise overflow-hidden rounded-2xl border border-white/10 bg-white/[0.055] shadow-2xl shadow-black/20 backdrop-blur-sm [animation-delay:300ms]">
               <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-3.5">
                 <div className="flex items-center gap-2">
                   <LockKeyhole className="h-3.5 w-3.5 text-saffron-200" aria-hidden />
@@ -118,7 +120,10 @@ export default async function LoginPage() {
                 {custodySteps.map((step, index) => {
                   const Icon = step.icon;
                   return (
-                    <li key={step.title} className="flex items-start gap-3.5 px-5 py-3.5">
+                    <li
+                      key={step.title}
+                      className="flex items-start gap-3.5 px-5 py-3.5 transition-colors hover:bg-white/[0.025]"
+                    >
                       <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-saffron-200">
                         <Icon className="h-4 w-4" aria-hidden />
                       </span>
@@ -145,7 +150,7 @@ export default async function LoginPage() {
             </div>
           </div>
 
-          <div>
+          <div className="animate-fade-in [animation-delay:420ms]">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-5 text-[10px] text-white/40">
               <span className="flex items-center gap-1.5">
                 <LockKeyhole className="h-3 w-3 text-saffron-200/70" aria-hidden />
@@ -168,7 +173,7 @@ export default async function LoginPage() {
       </section>
 
       <section className="flex min-h-dvh flex-col bg-[#fbfaf7]">
-        <div className="flex items-center justify-between gap-4 border-b border-border/60 px-6 py-4 lg:hidden">
+        <div className="flex animate-fade-in items-center justify-between gap-4 border-b border-border/60 px-6 py-4 lg:hidden">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 text-saffron-200">
               <ShieldCheck className="h-5 w-5" aria-hidden />
@@ -189,9 +194,12 @@ export default async function LoginPage() {
 
         <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-10 lg:px-14">
           <div className="w-full max-w-[405px]">
-            <div className="animate-fade-in">
+            <div className="animate-rise">
               <p className="eyebrow flex items-center gap-2">
-                <span className="h-px w-6 bg-saffron-500" aria-hidden />
+                <span
+                  className="h-px w-6 origin-left animate-grow-x bg-saffron-500"
+                  aria-hidden
+                />
                 Portal access
               </p>
               <h2 className="font-display mt-3 text-[2.15rem] font-semibold leading-[1.08] tracking-[-0.02em] text-navy-950">
@@ -202,11 +210,11 @@ export default async function LoginPage() {
               </p>
             </div>
 
-            <div className="animate-fade-in [animation-delay:100ms]">
+            <div className="animate-rise [animation-delay:120ms]">
               <LoginForm />
             </div>
 
-            <div className="mt-8 flex items-start gap-3 rounded-xl border border-border/80 bg-white px-4 py-3.5 shadow-card">
+            <div className="mt-8 flex animate-rise items-start gap-3 rounded-xl border border-border/80 bg-white px-4 py-3.5 shadow-card [animation-delay:240ms]">
               <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                 <ShieldCheck className="h-4 w-4" aria-hidden />
               </span>

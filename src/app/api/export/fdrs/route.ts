@@ -76,7 +76,7 @@ export async function GET(request: Request) {
     body = JSON.stringify(
       {
         meta: {
-          title: "AICTE Security Deposit & FDR Register",
+          title: "FDR Setu · Security Deposit & FDR Register",
           generatedAt,
           generatedBy: user.name,
           generatedByRole: user.role,
@@ -87,7 +87,7 @@ export async function GET(request: Request) {
           recordCount: prepared.length,
           filters,
           disclaimer:
-            "Generated from the live AICTE Suraksha register. Verify instrument particulars against the source documents before external use.",
+            "Generated from the live FDR Setu register. Verify instrument particulars against the source documents before external use.",
         },
         records: prepared,
       },

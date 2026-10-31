@@ -67,7 +67,10 @@ export default async function AuditPage({
         }
       />
 
-      <section aria-label="Audit summary" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section
+        aria-label="Audit summary"
+        className="stagger-cards grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <StatCard
           label="Total events"
           value={data.summary.total.toLocaleString("en-IN")}
