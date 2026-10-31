@@ -317,6 +317,18 @@
   }
 }
 
+@keyframes border-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes beam-flow {
+  to {
+    stroke-dashoffset: -1200;
+  }
+}
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .scroll-reveal {
@@ -341,7 +353,7 @@
     opacity: 0;
     transition: opacity 360ms ease;
     background: radial-gradient(
-      420px circle at 50% 50%,
+      420px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
       rgba(255, 255, 255, 0.09),
       transparent 62%
     );
@@ -349,7 +361,7 @@
 
   .dark .card-spotlight::after {
     background: radial-gradient(
-      420px circle at 50% 50%,
+      420px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
       rgba(255, 255, 255, 0.055),
       transparent 62%
     );

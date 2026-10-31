@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 
 import { IndiaFlag } from "@/components/india-flag";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { TextGenerateEffect } from "@/components/ui/text-generate";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -161,6 +163,7 @@ export default function AboutPage() {
       />
 
       <section className="relative overflow-hidden rounded-2xl bg-navy-950 p-6 text-white shadow-lift sm:p-8 lg:p-10">
+      <BackgroundBeams className="opacity-30" />
         <div className="navy-grid absolute inset-0 opacity-60" aria-hidden />
         <div
           className="absolute -right-24 -top-24 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(227,160,67,0.22),transparent_68%)]"
@@ -177,7 +180,7 @@ export default function AboutPage() {
               Regulatory infrastructure
             </span>
             <h2 className="font-display mt-4 max-w-2xl text-[2rem] font-semibold leading-[1.12] tracking-[-0.02em] text-balance sm:text-[2.5rem]">
-              From a scattered paper trail to a governed digital lifecycle.
+              <TextGenerateEffect text="From a scattered paper trail to a governed digital lifecycle." />
             </h2>
             <p className="mt-4 max-w-xl text-[13px] leading-relaxed text-white/55">
               The portal replaces disconnected spreadsheets, email threads and physical custody
@@ -259,7 +262,7 @@ export default function AboutPage() {
           </figcaption>
         </figure>
 
-        <div className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-card">
+        <div className="card-spotlight flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-card">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-saffron-200 bg-saffron-50 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-saffron-800">
               <IndiaFlag className="h-3 w-[18px]" />

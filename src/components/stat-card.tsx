@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -68,13 +71,38 @@ export function StatCard({
   badge?: string;
 }) {
   const style = tones[tone];
+  const spotlightRef = React.useRef<HTMLDivElement>(null);
+
+  function moveSpotlight(event: React.MouseEvent<HTMLDivElement>) {
+    const node = spotlightRef.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    node.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
+    node.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
+  }
+
   const content = (
     <div
+      ref={spotlightRef}
+      onMouseMove={moveSpotlight}
+      onMouseLeave={() => {
+        const node = spotlightRef.current;
+        if (node) {
+          node.style.setProperty("--spotlight-x", "50%");
+          node.style.setProperty("--spotlight-y", "50%");
+        }
+      }}
       className={cn(
         "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5 card-spotlight",
         style.card,
         href && "hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lift",
       )}
+      style={
+        {
+          "--spotlight-x": "50%",
+          "--spotlight-y": "50%",
+        } as React.CSSProperties
+      }
     >
       <span
         aria-hidden

@@ -19,6 +19,7 @@ import {
 
 import { loginAction, type LoginState } from "@/lib/actions/session";
 import { cn } from "@/lib/utils";
+import { MovingBorder } from "@/components/ui/moving-border";
 
 const initialState: LoginState = {};
 
@@ -50,28 +51,30 @@ function SubmitButton({ buttonRef }: { buttonRef: React.Ref<HTMLButtonElement> }
   const { pending } = useFormStatus();
 
   return (
-    <button
-      ref={buttonRef}
-      id="sign-in-submit"
-      type="submit"
-      disabled={pending}
-      className="button-sheen group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-primary/90 hover:shadow-glow active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
-    >
-      {pending ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-          Verifying access…
-        </>
-      ) : (
-        <>
-          Sign in to workspace
-          <ArrowRight
-            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-            aria-hidden
-          />
-        </>
-      )}
-    </button>
+    <MovingBorder borderRadius="0.5rem" className="w-full">
+      <button
+        ref={buttonRef}
+        id="sign-in-submit"
+        type="submit"
+        disabled={pending}
+        className="button-sheen group flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-[0_10px_30px_-14px_rgba(11,43,71,0.8)] transition-all hover:bg-primary/90 hover:shadow-glow active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-75"
+      >
+        {pending ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            Verifying access...
+          </>
+        ) : (
+          <>
+            Sign in to workspace
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+              aria-hidden
+            />
+          </>
+        )}
+      </button>
+    </MovingBorder>
   );
 }
 

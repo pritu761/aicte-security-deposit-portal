@@ -12,6 +12,8 @@ import {
 
 import { LoginForm } from "@/app/login/login-form";
 import { IndiaFlag } from "@/components/india-flag";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { TextGenerateEffect } from "@/components/ui/text-generate";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { APP_NAME, APP_SUBTITLE, ORGANISATION } from "@/lib/constants";
 import { getCurrentUser } from "@/lib/session";
@@ -46,6 +48,7 @@ export default async function LoginPage() {
   return (
     <main id="main-content" className="min-h-dvh lg:grid lg:grid-cols-[1.05fr_minmax(440px,0.95fr)]">
       <section className="relative hidden min-h-dvh overflow-hidden bg-navy-950 text-white lg:flex lg:flex-col">
+        <BackgroundBeams className="opacity-35" />
         <div className="navy-grid absolute inset-0 opacity-70" aria-hidden />
         <div
           className="absolute -left-40 top-14 h-[520px] w-[520px] animate-float-slow rounded-full bg-[radial-gradient(circle,rgba(227,160,67,0.2),transparent_68%)]"
@@ -97,7 +100,7 @@ export default async function LoginPage() {
             <h1 className="font-display mt-5 animate-rise text-[2.7rem] font-semibold leading-[1.05] tracking-[-0.025em] text-white text-balance [animation-delay:140ms] xl:text-[3.25rem]">
               Every deposit.
               <br />
-              <span className="text-gradient-gold animate-gradient-pan">Accounted for.</span>
+              <span className="text-gradient-gold animate-gradient-pan"><TextGenerateEffect text="Accounted for." /></span>
             </h1>
             <p className="mt-5 max-w-[475px] animate-rise text-[13.5px] leading-relaxed text-white/60 [animation-delay:220ms]">
               A single, auditable workspace for institutional security deposits — from FDR
