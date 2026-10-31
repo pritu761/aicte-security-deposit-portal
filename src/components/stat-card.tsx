@@ -1,11 +1,9 @@
-"use client";
-
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight } from "lucide-react";
-import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { SpotlightSurface } from "@/components/ui/spotlight-surface";
 
 type Tone = "neutral" | "success" | "warning" | "danger" | "info" | "violet";
 
@@ -71,88 +69,65 @@ export function StatCard({
   badge?: string;
 }) {
   const style = tones[tone];
-  const spotlightRef = React.useRef<HTMLDivElement>(null);
-
-  function moveSpotlight(event: React.MouseEvent<HTMLDivElement>) {
-    const node = spotlightRef.current;
-    if (!node) return;
-    const rect = node.getBoundingClientRect();
-    node.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
-    node.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
-  }
-
   const content = (
-    <div
-      ref={spotlightRef}
-      onMouseMove={moveSpotlight}
-      onMouseLeave={() => {
-        const node = spotlightRef.current;
-        if (node) {
-          node.style.setProperty("--spotlight-x", "50%");
-          node.style.setProperty("--spotlight-y", "50%");
-        }
-      }}
-      className={cn(
-        "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5 card-spotlight",
-        style.card,
-        href && "hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lift",
-      )}
-      style={
-        {
-          "--spotlight-x": "50%",
-          "--spotlight-y": "50%",
-        } as React.CSSProperties
-      }
-    >
-      <span
-        aria-hidden
-        className={cn("absolute inset-x-0 top-0 h-[3px] origin-left animate-grow-x", style.accent)}
-      />
-      {href ? (
+    <SpotlightSurface className="h-full">
+      <div
+        className={cn(
+          "group relative h-full overflow-hidden rounded-xl border p-4 shadow-card transition-all duration-300 sm:p-5",
+          style.card,
+          href && "hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lift",
+        )}
+      >
         <span
           aria-hidden
-          className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/45 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100 dark:bg-white/10"
+          className={cn("absolute inset-x-0 top-0 h-[3px] origin-left animate-grow-x", style.accent)}
         />
-      ) : null}
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="data-label flex items-center gap-1.5">
-            {pulse ? (
-              <span className="relative flex h-2 w-2" aria-hidden>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-600" />
-              </span>
-            ) : null}
-            {label}
-          </p>
-          <p className={cn("metric-number mt-2 text-[1.6rem] font-semibold leading-none", style.value)}>
-            {value}
-          </p>
-        </div>
-        <span
-          className={cn(
-            "rounded-lg p-2 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105",
-            style.icon,
-          )}
-        >
-          <Icon className="h-[18px] w-[18px]" aria-hidden />
-        </span>
-      </div>
-      <div className="mt-3 flex items-end justify-between gap-2">
-        {subtext ? (
-          <div className="text-[11.5px] leading-snug text-muted-foreground">{subtext}</div>
-        ) : (
-          <span />
-        )}
-        {badge ? (
-          <span className="rounded-full border border-border/70 bg-background/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            {badge}
-          </span>
-        ) : href ? (
-          <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
+        {href ? (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/45 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100 dark:bg-white/10"
+          />
         ) : null}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="data-label flex items-center gap-1.5">
+              {pulse ? (
+                <span className="relative flex h-2 w-2" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-600" />
+                </span>
+              ) : null}
+              {label}
+            </p>
+            <p className={cn("metric-number mt-2 text-[1.6rem] font-semibold leading-none", style.value)}>
+              {value}
+            </p>
+          </div>
+          <span
+            className={cn(
+              "rounded-lg p-2 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105",
+              style.icon,
+            )}
+          >
+            <Icon className="h-[18px] w-[18px]" aria-hidden />
+          </span>
+        </div>
+        <div className="mt-3 flex items-end justify-between gap-2">
+          {subtext ? (
+            <div className="text-[11.5px] leading-snug text-muted-foreground">{subtext}</div>
+          ) : (
+            <span />
+          )}
+          {badge ? (
+            <span className="rounded-full border border-border/70 bg-background/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {badge}
+            </span>
+          ) : href ? (
+            <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
+          ) : null}
+        </div>
       </div>
-    </div>
+    </SpotlightSurface>
   );
 
   return href ? (
