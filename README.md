@@ -18,6 +18,16 @@ FDR Setu replaces spreadsheet-based tracking of institutional security deposits 
 - Append-only audit log enforced by a PostgreSQL trigger
 - Recharts analytics, CSV/JSON exports, printable release authorisation receipts
 - **38 Vitest unit tests**, clean `tsc --noEmit`, production build verified
+- **Institutional UI** - AICTE headquarters backdrop, accurate Indian flag SVG, persisted light/dark theme, and Aceternity-style motion effects
+
+## UI, theming, and motion
+
+- **Institutional backdrop** - the AICTE headquarters photograph renders as a fixed, low-contrast background on every route, in both colour themes.
+- **Accurate Indian flag** - a reusable inline SVG with tricolour bands and a 24-spoke Ashoka Chakra replaces emoji flags in the header, login, footer, and About page.
+- **Persisted light/dark theme** - class-based `.dark` mode on `<html>`, initialised before hydration from `localStorage` (`fdr-setu-theme`) or the system preference, with a header/login toggle and a theme-aware Sonner toaster.
+- **Semantic dark tokens** - navy/saffron identity preserved; legacy status utility classes (emerald, amber, rose, sky, violet, slate, teal, red, saffron) adapt automatically.
+- **Aceternity-style effects** - background beams, moving-border CTA, spotlight cards, and text-generate headings, all CSS-first with reduced-motion support.
+- **Accessibility** - Lighthouse accessibility score 1.0 on the dashboard and login in both themes.
 
 ## Sign in
 
